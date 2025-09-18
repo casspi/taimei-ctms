@@ -1,0 +1,30 @@
+export interface JoinMember {
+  address: string
+  addressCode: string
+  areaId: string
+  birthDt: string
+  checkDt: string
+  createByName: string
+  diagnosisCertificatePath: string
+  diagnosisCertificatePathList: string
+  economicSituationPath: string
+  economicSituationPathList: string
+  emergencyContact: string
+  emergencyContactBak: string
+  emergencyContactPhone: string
+  emergencyContactPhoneBak: string
+  guardianPath: string
+  guardianPathList: string
+  idNumber: string
+  idNumberPhotoPath: string
+  idNumberPhotoPathList: string
+  informedConsentFormPath: string
+  informedConsentFormPathList: string
+  maritalStatus: string
+  modifyByName: string
+  projectId: string
+  remark: string
+  status: string
+  wechatId: string
+  id: string
+}

@@ -1,0 +1,7 @@
+export * from './captcha'
+export * from './dict'
+export * from './dictionary'
+export * from './district'
+export * from './file'
+export * from './old'
+export * from './role'

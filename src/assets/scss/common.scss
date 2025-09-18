@@ -1,0 +1,70 @@
+@use 'define.scss' as *;
+body {
+  background-color: var(--ds-body-background-color);
+}
+
+.c-flex {
+  @extend %df;
+}
+
+.c-img-preview {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+.c-row{
+  @extend %df;
+  &.is-aic{
+    @extend %aic;
+  }
+  .c-img-preview{
+    width: 40px;
+    height: 40px;
+    margin-right: j(16);
+  }
+}
+.c-img-preview-inline {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.c-card {
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.05);
+}
+.c-sidebar {
+  @extend %oh;
+  @extend .c-card;
+  width: 190px;
+  min-height: calc(100vh - var(--ds-navbar-height) - 37px - 32px - 32px);
+}
+
+.c-display-inner {
+  @extend %df1;
+  @extend %oh;
+  margin-left: 16px;
+}
+.c-display-actions {
+  @extend .c-card;
+  @extend %df;
+  @extend %aic;
+  h2 {
+    @extend %c3;
+    margin-right: auto;
+    font-size: 16px;
+  }
+}
+
+.c-display-content {
+  @extend .c-card;
+  margin-top: j(16);
+}
+.c-label-width {
+  width: 120px;
+}
+.c-content-width {
+  width: 300px;
+}

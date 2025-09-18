@@ -1,0 +1,26 @@
+@forward './define.scss';
+
+
+:root {
+  // navbar
+  --ds-navbar-height: 50px;
+
+  --ds-header-bg-color: #ffffff;
+
+  // slidebar
+  --ds-slidebar-width: 210px;
+  --ds-slidebar-collapse-width: 64px;
+  --ds-slidebar-bg-color: #304156;
+  --ds-slidebar-logo-bg-color: #f39f73;
+  --ds-slidebar-logo-text-color: #ffffff;
+
+  // menu
+  --ds-menu-bg-color: transparent;
+  --ds-menu-hover-bg-color: rgb(240, 133, 101, 0.6);
+  --ds-menu-text-color: #fff;
+  --ds-menu-hover-text-color: #fff;
+  // --el-sub-menu-bg-color:transparent;
+  --el-sub-menu-bg-color: #f99f73;
+  --el-sub-menu-hover-bg-color: rgb(240, 133, 101, 0.8);
+  --el-sub-menu-active-bg-color: #f08565;
+}

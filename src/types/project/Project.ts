@@ -1,0 +1,37 @@
+export interface Project {
+  actualEndDt: string
+  actualStartDt: string
+  city: string
+  context: string
+  country: string
+  createBy: string
+  createDt: string
+  hospitalId: string
+  modifyBy: string
+  modifyDt: string
+  planEndDt: string
+  planStartDt: string
+  projectAccessComplete: string
+  projectAccessSimple: string
+  projectContrastMedicine: string
+  projectDescription: string
+  projectEnrollMaterial: string
+  projectExclusionComplete: string
+  projectGeneType: string
+  projectId: string
+  projectMedicineInfo: string
+  projectMedicineStandard: string
+  projectMedicineUse: string
+  projectName: string
+  projectNo: string
+  projectOwnerId: string
+  projectSection: string
+  projectStatus: string
+  projectTreatmentDemand: string
+  projectTrialMedicine: string
+  projectTrialName: string
+  projectTrialPeriod: string
+  projectType: string
+  province: string
+  qcode: string
+}

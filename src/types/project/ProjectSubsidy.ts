@@ -1,0 +1,34 @@
+export interface ProjectSubsidy {
+  id: string
+  bankAddress: string
+  bankAddressPath: string
+  bankAddressPathList: string[]
+  bankCardId: string
+  bankCardIdPath: string
+  bankCardIdPathList: string[]
+  checkBy: string
+  checkDt: string
+  checkRemark: string
+  createBy: string
+  createByName: string
+  createDt: string
+  medicalInsurancePath: string
+  medicalInsurancePathList: string[]
+  modifyBy: string
+  modifyByName: string
+  modifyDt: string
+  payBy: string
+  payDt: string
+  payProofPath: string
+  payProofPathList: string[]
+  payRemark: string
+  payStatus: string
+  payStatusName: string
+  prescriptionPath: string
+  prescriptionPathList: string[]
+  purchaseInvoicePath: string
+  purchaseInvoicePathList: string[]
+  relId: string
+  status: string
+  statusName: string
+}

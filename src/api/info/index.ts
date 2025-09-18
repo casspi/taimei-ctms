@@ -1,0 +1,5 @@
+export * from './advertisement'
+export * from './clinical-center'
+export * from './clinical-trial'
+export * from './popular-medicine'
+export * from './popular-science'

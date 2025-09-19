@@ -1,7 +1,7 @@
 export interface CaptchaInfo {
   token: string
-  base64EncodeImg: string
-  verCode: string
+  img: string
+  uuid: string
   createTime: CreateTime
 }
 

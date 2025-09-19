@@ -3,11 +3,11 @@
     <Transition name="layout-sidebar-logo-fade">
       <RouterLink class="is-collapse" to="/" key="collapse" v-if="collapse">
         <img src="@/assets/img/logo.png" alt="logo" />
-        <span>{{ metadata.title }}</span>
+        <span>{{ metadata.title }}-我的工作台</span>
       </RouterLink>
       <RouterLink class="is-expand" key="expand" v-else to="/">
         <img src="@/assets/img/logo.png" alt="logo" />
-        <span>{{ metadata.title }}</span>
+        <span>{{ metadata.title }}-我的工作台</span>
       </RouterLink>
     </Transition>
   </div>
@@ -29,8 +29,8 @@
     height: $navbar-height;
     background-color: var(--ds-slidebar-logo-bg-color);
     img {
-      width: 30px;
-      height: 30px;
+      width: 58px;
+      height: 31px;
     }
     a {
       @extend %df;

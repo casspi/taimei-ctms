@@ -34,7 +34,7 @@ export default [
         path: '',
         component: () => import('@/views/common/MockView.vue'),
         hidden: true,
-        meta: { title: '数据mock' },
+        meta: { title: '数据mock', requiresAuth: -1 },
       },
     ],
   },

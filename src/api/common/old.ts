@@ -1,9 +1,8 @@
 import type { CaptchaInfo, ModulesItem, Userinfo } from '@/types'
 
 import curl from '../curl'
-
 // 获取验证码
-export const reqCaptchaInfo = () => curl<CaptchaInfo>('loginAuth/getImage')
+export const reqCaptchaInfo = () => curl<CaptchaInfo>('prod-api/captchaImage')
 
 // 校验验证码
 export const doCaptchaCheck = ({ code, sessionId }: { code: string; sessionId: string }) =>

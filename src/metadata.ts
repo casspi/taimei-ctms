@@ -1,4 +1,4 @@
 export const metadata = {
-  title: 'TrialOS药试圈',
-  subtitle: '',
+  title: '康方生物 - Akeso',
+  subtitle: '药试管理系统',
 }

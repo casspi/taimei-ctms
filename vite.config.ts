@@ -21,6 +21,11 @@ export default defineConfig({
   // dev server
   server: {
     proxy: {
+      '/dev-api': {
+        target: 'https://vue.ruoyi.vip/',
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/dev-api/, ''),
+      },
       '/api': {
         target: 'https://rich.hjbxjz.com',
         changeOrigin: true,
@@ -37,7 +42,7 @@ export default defineConfig({
     vueJsx(),
 
     versionFile({
-      source: JSON.stringify({ status: 0, data: Date.now() }),
+      source: JSON.stringify({ code: 200, data: Date.now() }),
     }),
 
     // https://github.com/antfu/unplugin-auto-import

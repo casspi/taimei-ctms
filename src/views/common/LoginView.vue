@@ -103,8 +103,8 @@
   // 图形验证
   const { data: captchaInfo, trigger: handleCaptchaTrigger } = useAsyncTask(
     async () => {
-      const { base64EncodeImg, ...rest } = await reqCaptchaInfo()
-      return { ...rest, base64EncodeImg: `data:image/jpeg;base64,${base64EncodeImg}` }
+      const { img, ...rest } = await reqCaptchaInfo()
+      return { ...rest, base64EncodeImg: `data:image/gif;base64,${img}` }
     },
     {
       immediate: true,
@@ -268,13 +268,15 @@
   .captcha-box {
     @extend %db;
     @extend %cp;
-    height: 24px;
-    width: 80px;
+    // height: 24px;
+    // width: 80px;
+    height: 38px;
     background-color: #f2f2f2;
     img {
       @extend %db;
       @extend %h100;
       @extend %w100;
+      object-fit: cover;
     }
   }
 </style>

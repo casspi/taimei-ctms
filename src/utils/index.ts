@@ -1,5 +1,6 @@
 export * from './constants'
 export * from './createNamespace'
+export * from './errorCode'
 export * from './excludeMessage'
 export * from './fields'
 export * from './nprogress'

@@ -3,12 +3,11 @@ import axios, { type AxiosRequestConfig } from 'axios'
 import qs from 'qs'
 
 import { useUserinfoStore } from '@/stores'
+import { errorCode } from '@/utils'
 
 import { log } from './log'
 
-export const baseURL = window.location.hostname.includes('gyzj.gongyujjh.org.cn')
-  ? 'https://gyzj.gongyujjh.org.cn/rare-disease-platform-web/'
-  : 'https://gyzj.gongyujjh.org.cn/rare-disease-platform-web-v2/'
+export const baseURL = 'https://vue.ruoyi.vip/'
 
 const instance = axios.create({
   baseURL,
@@ -34,59 +33,57 @@ instance.interceptors.request.use(
 
 // 添加响应拦截器
 instance.interceptors.response.use(
-  (response) => {
-    // 对响应数据做点什么
-    const { data: respData, config } = response
+  (res) => {
+    const { data: respData, config } = res
     log(config, '请求返回 => ', respData)
     if (!respData) {
       return Promise.reject(`网络繁忙，请稍后再试(1)`)
     }
-    // eslint-disable-next-line prefer-const
-    let { status, message, data } = respData
+    // 未设置状态码则默认成功状态
+    const code = respData.code || 200
+    // 获取错误信息
+    const msg = errorCode[code as keyof typeof errorCode] || res.data.msg || errorCode['default']
     // 二进制数据则直接返回
-    if (
-      response.request.responseType === 'blob' ||
-      response.request.responseType === 'arraybuffer'
-    ) {
-      if (respData.type === 'application/json') return Promise.reject('下载失败！')
-      return respData
+    if (res.request.responseType === 'blob' || res.request.responseType === 'arraybuffer') {
+      return res.data
     }
-
-    if ([2].includes(status)) {
+    if (code === 401) {
       const { logout } = useUserinfoStore()
       if (!config.url?.includes('logout')) {
         logout()
       }
       return Promise.reject(`登录已失效，请重新登录`)
+    } else if (code === 500) {
+      return Promise.reject(new Error(msg))
+    } else if (code === 601) {
+      return Promise.reject(new Error(msg))
+    } else if (code !== 200) {
+      return Promise.reject(`网络繁忙，请稍后再试(2)`)
+      // return Promise.reject('error')
+    } else {
+      return Promise.resolve(respData)
     }
-    if (status !== 0 && status !== 5) {
-      // 处理 err 在 data 的情况
-      if (!message) {
-        const errors: any[] = data?.errors
-        if (errors && errors.length) {
-          message = errors.map((item) => item.description).join(' ')
-        }
-      }
-      return Promise.reject(message || `网络繁忙，请稍后再试(2)`)
-    }
-
-    return data
   },
   (error) => {
     log(error.config, '请求错误 => ', error)
-
-    if (error && error.response) {
-      const { status, data: respData } = error.response
-      error = status ? `网络繁忙，请稍后再试[${status}]` : `网络繁忙，请稍后再试(3)`
+    // eslint-disable-next-line prefer-const
+    let { message, response } = error
+    if (response) {
+      const { code, data: respData } = response
+      message = code ? `网络繁忙，请稍后再试[${code}]` : `网络繁忙，请稍后再试(3)`
       if (respData && respData.message) {
-        error = respData.message
+        message = respData.message
       }
-    } else if (error && error.message) {
-      error = error.message
+    } else if (message == 'Network Error') {
+      message = '后端接口连接异常'
+    } else if (message.includes('timeout')) {
+      message = '系统接口请求超时'
+    } else if (message.includes('Request failed with status code')) {
+      message = '系统接口' + message.substr(message.length - 3) + '异常'
     } else {
-      error = `网络繁忙，请稍后再试(4)`
+      message = `网络繁忙，请稍后再试(4)`
     }
-    return Promise.reject(error)
+    return Promise.reject(message)
   },
 )
 

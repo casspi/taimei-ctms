@@ -28,8 +28,10 @@
   .console-wrap {
     @extend %w100;
     min-height: 100vh;
-    background: url('@/assets/img/bg-console.webp') center no-repeat;
-    background-size: cover;
+    background: #f2f2f2;
+
+    // background: url('@/assets/img/bg-console.webp') center no-repeat;
+    // background-size: cover;
   }
   .header-section {
     @extend %df;
@@ -40,7 +42,7 @@
     z-index: 1;
     padding: 0 24px;
     height: var(--ds-navbar-height);
-    background: linear-gradient(to right, #f2986d, #ee715d);
+    background: linear-gradient(to right, #769aee, #769aee);
   }
   .logo-box {
     background-color: transparent;

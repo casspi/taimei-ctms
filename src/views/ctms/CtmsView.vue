@@ -11,23 +11,23 @@
         <ElMenuItem index="1" to="/ctms">
           <RouterLink to="/ctms">首页</RouterLink>
         </ElMenuItem>
-        <ElMenuItem index="2">
-          <RouterLink to="/ctms/dashboard">我的企业报表</RouterLink>
+        <ElMenuItem index="2" disabled>
+          <RouterLink to="/ctms">我的企业报表</RouterLink>
         </ElMenuItem>
-        <ElMenuItem index="3">
-          <RouterLink to="/ctms/dashboard">我的数据报表</RouterLink>
+        <ElMenuItem index="3" disabled>
+          <RouterLink to="/ctms">我的数据报表</RouterLink>
         </ElMenuItem>
-        <ElMenuItem index="4">
-          <RouterLink to="/ctms/dashboard">Dashboard</RouterLink>
+        <ElMenuItem index="4" disabled>
+          <RouterLink to="/ctms">Dashboard</RouterLink>
         </ElMenuItem>
-        <ElMenuItem index="5">
-          <RouterLink to="/ctms/dashboard">CRA排行榜</RouterLink>
+        <ElMenuItem index="5" disabled>
+          <RouterLink to="/ctms">CRA排行榜</RouterLink>
         </ElMenuItem>
-        <ElMenuItem index="6">
-          <RouterLink to="/ctms/dashboard">中心库</RouterLink>
+        <ElMenuItem index="6" disabled>
+          <RouterLink to="/ctms">中心库</RouterLink>
         </ElMenuItem>
-        <ElMenuItem index="7">
-          <RouterLink to="/ctms/dashboard">论坛</RouterLink>
+        <ElMenuItem index="7" disabled>
+          <RouterLink to="/ctms">论坛</RouterLink>
         </ElMenuItem>
       </ElMenu>
       <UserBox />
@@ -43,8 +43,8 @@
   import SidebarLogo from '@/layout/components/sidebar/SidebarLogo.vue'
   const activeIndex = ref('1')
   const handleSelect = (index: string) => {
-    // activeIndex.value = index
-    ElMessage.info('敬请期待！')
+    activeIndex.value = index
+    // ElMessage.info('敬请期待！')
   }
 </script>
 
@@ -58,11 +58,11 @@
   .ctms-menu {
     flex: 1;
     margin-left: 20px;
+    border-bottom: none;
   }
   .layout-content {
     @extend %bsb;
     padding: 16px;
-    padding-top: calc($navbar-height + 37px + 16px);
     background-color: #fff;
   }
 </style>

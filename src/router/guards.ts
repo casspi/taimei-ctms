@@ -13,12 +13,13 @@ export function setupGuards(router: Router) {
     NProgress.start()
 
     // 比对前端版本有没有更新
-    doCompareVersion()
+    await doCompareVersion()
 
     const { userinfo } = useUserinfoStore()
-    const { id } = userinfo ?? {}
-    const isLogin = !!id
-
+    const { token } = userinfo ?? {}
+    const isLogin = !!token
+    console.log('isLogin', isLogin, to)
+    console.log(isLoadAsyncRoutesFlag)
     // 是否需要授权，1 需要授权、-1 不需要登录、0 登录、不登录都可以
     const requiresAuth = to.meta.requiresAuth ?? 1
     // 已登录进入到不需要登录的页面，直接跳转回首页
@@ -35,8 +36,10 @@ export function setupGuards(router: Router) {
       await loadAsyncRoutes()
       // fix No match found for location with path
       if (to.redirectedFrom?.fullPath) {
+        console.log('loadAsyncRoutes1', { path: to.redirectedFrom.fullPath, replace: true })
         return { path: to.redirectedFrom.fullPath, replace: true }
       }
+      console.log('loadAsyncRoutes2', { ...to, replace: true })
       return { ...to, replace: true }
     }
   })

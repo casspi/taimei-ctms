@@ -7,7 +7,7 @@ import { errorCode } from '@/utils'
 
 import { log } from './log'
 
-export const baseURL = 'https://vue.ruoyi.vip/'
+export const baseURL = 'https://vue.ruoyi.vip/prod-api/'
 
 const instance = axios.create({
   baseURL,
@@ -90,21 +90,29 @@ instance.interceptors.response.use(
 const curl = <T = any>(
   url: string,
   data: Record<string, any> = {},
-  options?: Omit<AxiosRequestConfig, 'params' | 'data' | 'url'> & { isStringify?: boolean },
-): Promise<T> => {
-  const { method, headers = {} } = (options = Object.assign(
+  options?: Omit<AxiosRequestConfig, 'params' | 'data' | 'url'> & {
+    isStringify?: boolean
+    isToken?: boolean
+  },
+): Promise<{ code: number; msg: string } & T> => {
+  const {
+    method,
+    headers = {},
+    isToken,
+  } = (options = Object.assign(
     {
       url,
       method: 'get',
       isStringify: false,
+      isToken: true,
     },
     options,
   ))
 
   const { userinfo } = useUserinfoStore()
-  const { sessionId } = userinfo || {}
-  if (sessionId) {
-    options.headers = Object.assign(headers, { __gsessionId: sessionId, Authorization: sessionId })
+  const { token } = userinfo || {}
+  if (isToken && token) {
+    options.headers = Object.assign(headers, { Authorization: 'Bearer ' + token })
   }
 
   // 转换 url path params
@@ -114,9 +122,9 @@ const curl = <T = any>(
     // content-type application/x-www-form-urlencoded
     // body 传参需要序列化下
     // 兼容老接口
-    if (method !== 'get' && options.isStringify) {
-      data = qs.stringify(data, { arrayFormat: 'repeat' }) as any
-    }
+    // if (method !== 'get' && options.isStringify) {
+    //   data = qs.stringify(data, { arrayFormat: 'repeat' }) as any
+    // }
   }
 
   return instance({

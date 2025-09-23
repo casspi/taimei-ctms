@@ -18,9 +18,9 @@
           :rules="objFormRules"
           @submit="handleSubmit"
         >
-          <ElFormItem prop="userId">
+          <ElFormItem prop="username">
             <ElInput
-              v-model="objForm.userId"
+              v-model="objForm.username"
               prefix-icon="User"
               :disabled="loading"
               clearable
@@ -76,9 +76,8 @@
 
 <script setup lang="ts">
   import { useAsyncTask } from '@daysnap/vue-use'
-  import md5 from 'md5'
 
-  import { doAdminUserLogin, doCaptchaCheck, reqCaptchaInfo } from '@/api'
+  import { doAdminUserLogin, reqCaptchaInfo } from '@/api'
   import { useForm } from '@/hooks'
   import { metadata } from '@/metadata'
   import { useUserinfoStore } from '@/stores'
@@ -87,14 +86,14 @@
   // 表单
   const [formInstance, objForm, objFormRules] = useForm(
     {
-      userId: 'admin',
-      password: 'admin',
+      username: 'admin',
+      password: 'admin123',
       code: '',
       isRemember: false,
       ...accountInfoStorage.getItem({}),
     },
     {
-      userId: [{ required: true, message: '请填写账号', trigger: 'blur' }],
+      username: [{ required: true, message: '请填写账号', trigger: 'blur' }],
       password: [{ required: true, message: '请填写密码', trigger: 'blur' }],
       code: [{ required: true, message: '请填写验证码', trigger: 'blur' }],
     },
@@ -114,16 +113,21 @@
 
   // 登录
   const router = useRouter()
-  const { setUserinfo } = useUserinfoStore()
+  const { setUserinfo, updateUserInfoFromService } = useUserinfoStore()
   const { loading, trigger: handleSubmit } = useAsyncTask(
     async () => {
       await formInstance.value.validate().throw()
       try {
-        const { code, userId, password, isRemember } = objForm
-        await doCaptchaCheck({ code, sessionId: captchaInfo.value!.token })
-        const data = await doAdminUserLogin({ userId, password: md5(password) })
-        setUserinfo({ ...data, userId })
-        accountInfoStorage.setItem(isRemember ? { userId, password, isRemember } : { isRemember })
+        const { code, username, password, isRemember } = objForm
+        const { token } = await doAdminUserLogin({
+          username,
+          password,
+          code,
+          uuid: captchaInfo.value?.uuid!,
+        })
+        setUserinfo({ token, username })
+        await updateUserInfoFromService()
+        accountInfoStorage.setItem(isRemember ? { username, password, isRemember } : { isRemember })
         router.replace('/')
         ElMessage.success(`登录成功`)
       } catch (err) {

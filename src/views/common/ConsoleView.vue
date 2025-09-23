@@ -1,6 +1,6 @@
 <template>
   <div class="console-wrap">
-    <div class="header-section">
+    <div class="c-header-section">
       <SidebarLogo class="logo-box" />
       <UserBox />
     </div>
@@ -20,7 +20,8 @@
   import SidebarLogo from '@/layout/components/sidebar/SidebarLogo.vue'
 
   const router = useRouter()
-  const menus = computed(() => router.options.routes.filter((item) => !item.hidden))
+  console.log(' router.options.routes', router.options.routes)
+  const menus = computed(() => router.options.routes.filter((item) => item.meta?.isConsole))
 </script>
 
 <style lang="scss" scoped>
@@ -31,19 +32,9 @@
     background: #f2f2f2;
 
     // background: url('@/assets/img/bg-console.webp') center no-repeat;
-    // background-size: cover;
+    background-size: cover;
   }
-  .header-section {
-    @extend %df;
-    @extend %aic;
-    @extend %jcs;
-    @extend %ps;
-    @extend %t0;
-    z-index: 1;
-    padding: 0 24px;
-    height: var(--ds-navbar-height);
-    background: linear-gradient(to right, #769aee, #769aee);
-  }
+
   .logo-box {
     background-color: transparent;
   }
@@ -54,15 +45,17 @@
     @extend %df;
     @extend %jcs;
     @extend %fww;
-    padding: 16px 0;
-    max-width: 500px;
+    padding: 16px;
+    max-height: 200px;
+    background: #ffffff;
+    box-shadow: 0px 2px 7px -3px rgba(0, 0, 0, 0.2);
   }
   .menu-item {
     @extend %df;
     @extend %aic;
     @extend %bsb;
     margin-top: 32px;
-    width: 47%;
+    width: 20%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #fff;
     border-radius: 8px;

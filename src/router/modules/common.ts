@@ -15,7 +15,7 @@ export default [
     path: '/',
     component: () => import('@/views/common/ConsoleView.vue'),
     hidden: true,
-    meta: { title: '控制台', requiresAuth: -1 },
+    meta: { title: '控制台', requiresAuth: 1 },
   },
 
   {
@@ -23,6 +23,29 @@ export default [
     component: () => import('@/views/common/TinymceView.vue'),
     hidden: true,
     meta: { title: '富文本编辑框', requiresAuth: -1 },
+  },
+
+  {
+    path: '/ctms',
+    component: () => import('@/views/ctms/CtmsView.vue'),
+    meta: {
+      title: 'CTMS',
+      requiresAuth: 1,
+      image: './assets/img/ccp.png',
+      isConsole: true,
+    },
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/ctms/MyProjectView.vue'),
+        meta: { title: '我的项目' },
+      },
+      {
+        path: 'dashboard',
+        component: () => import('@/views/ctms/DashboardView.vue'),
+        meta: { title: '敬请期待' },
+      },
+    ],
   },
 
   {

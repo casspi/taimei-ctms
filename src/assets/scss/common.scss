@@ -68,3 +68,21 @@ body {
 .c-content-width {
   width: 300px;
 }
+
+
+.c-header-section {
+  @extend %df;
+  @extend %aic;
+  @extend %jcs;
+  @extend %ps;
+  @extend %t0;
+  z-index: 1;
+  padding: 0 24px;
+  height: var(--ds-navbar-height);
+  // background: linear-gradient(to right, #769aee, #769aee);
+  box-shadow:
+    0 4px 12px 0 rgba(0, 0, 0, 0.03),
+    0 7px 25px 0 rgba(0, 0, 0, 0.03),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+}

@@ -3,11 +3,11 @@
     <Transition name="layout-sidebar-logo-fade">
       <RouterLink class="is-collapse" to="/" key="collapse" v-if="collapse">
         <img src="@/assets/img/logo.png" alt="logo" />
-        <span>{{ metadata.title }}-我的工作台</span>
+        <span>{{ metadata.title }}<br />{{ title }}</span>
       </RouterLink>
       <RouterLink class="is-expand" key="expand" v-else to="/">
         <img src="@/assets/img/logo.png" alt="logo" />
-        <span>{{ metadata.title }}-我的工作台</span>
+        <span>{{ metadata.title }}<br />{{ title }}</span>
       </RouterLink>
     </Transition>
   </div>
@@ -19,6 +19,10 @@
       type: Boolean,
       default: false,
     },
+    title: {
+      type: String,
+      default: '我的工作台',
+    },
   })
 </script>
 <style lang="scss" scoped>
@@ -27,7 +31,7 @@
     @extend %pr;
     @extend %oh;
     height: $navbar-height;
-    background-color: var(--ds-slidebar-logo-bg-color);
+    // background-color: var(--ds-slidebar-logo-bg-color);
     img {
       width: 58px;
       height: 31px;
@@ -42,7 +46,7 @@
       @extend %wsn;
       font-size: 14px;
       font-weight: 600;
-      color: var(--ds-slidebar-logo-text-color);
+      color: #000; //var(--ds-slidebar-logo-text-color);
       &.is-collapse {
         span {
           @extend %pa;

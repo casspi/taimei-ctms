@@ -63,6 +63,7 @@
   .layout-content {
     @extend %bsb;
     padding: 16px;
-    background-color: #fff;
+    // background-color: #fff;
+    color: rgba(0, 0, 0, 0.65);
   }
 </style>

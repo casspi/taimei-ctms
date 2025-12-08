@@ -11,22 +11,22 @@
         <ElMenuItem index="1" to="/ctms">
           <RouterLink to="/ctms">首页</RouterLink>
         </ElMenuItem>
-        <ElMenuItem index="2" disabled>
+        <ElMenuItem index="2">
           <RouterLink to="/ctms">我的企业报表</RouterLink>
         </ElMenuItem>
-        <ElMenuItem index="3" disabled>
+        <ElMenuItem index="3">
           <RouterLink to="/ctms">我的数据报表</RouterLink>
         </ElMenuItem>
-        <ElMenuItem index="4" disabled>
+        <ElMenuItem index="4">
           <RouterLink to="/ctms">Dashboard</RouterLink>
         </ElMenuItem>
-        <ElMenuItem index="5" disabled>
+        <ElMenuItem index="5">
           <RouterLink to="/ctms">CRA排行榜</RouterLink>
         </ElMenuItem>
-        <ElMenuItem index="6" disabled>
+        <ElMenuItem index="6">
           <RouterLink to="/ctms">中心库</RouterLink>
         </ElMenuItem>
-        <ElMenuItem index="7" disabled>
+        <ElMenuItem index="7">
           <RouterLink to="/ctms">论坛</RouterLink>
         </ElMenuItem>
       </ElMenu>
@@ -59,11 +59,35 @@
     flex: 1;
     margin-left: 20px;
     border-bottom: none;
+    background-color: #485c6f;
+    height: 100%;
   }
   .layout-content {
     @extend %bsb;
-    padding: 16px;
-    // background-color: #fff;
-    color: rgba(0, 0, 0, 0.65);
+    padding: 10px;
+    width: 100%;
+    height: calc(100vh - $navbar-height);
+  }
+  :deep {
+    .el-menu--horizontal > .el-menu-item.is-active {
+      color: #fff !important;
+      border-bottom: 2px solid #ff9800;
+    }
+    .el-menu-item a {
+      color: rgba(243, 244, 246, 0.6);
+      font-size: 14px;
+      font-weight: 400;
+      transition: color 0.3s;
+      line-height: 50px;
+      display: inline-block;
+      border-bottom: 2px solid #485c6f;
+    }
+    .el-menu-item:hover,
+    .el-menu-item.is-active {
+      background-color: #485c6f !important;
+      a {
+        color: #fff !important;
+      }
+    }
   }
 </style>

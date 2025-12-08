@@ -35,6 +35,7 @@
     img {
       width: 58px;
       height: 31px;
+      background-color: #fff;
     }
     a {
       @extend %df;
@@ -46,7 +47,7 @@
       @extend %wsn;
       font-size: 14px;
       font-weight: 600;
-      color: #000; //var(--ds-slidebar-logo-text-color);
+      color: #fff; //var(--ds-slidebar-logo-text-color);
       &.is-collapse {
         span {
           @extend %pa;

@@ -8,7 +8,7 @@
     />
 
     <ProTableList
-      v-bind="status"
+      v-bind="{ ...status, ...$attrs }"
       :data="data"
       :has-pagination="hasPagination"
       :height="height"

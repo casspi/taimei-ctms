@@ -143,7 +143,7 @@
 
 <style lang="scss" scoped>
   @use '@/assets/scss/define.scss' as *;
-  $color-primary: rgb(10, 71, 237);
+  $login-primary-color: rgb(10, 71, 237);
   // px
   .login-wrap {
     @extend %pr;
@@ -246,7 +246,7 @@
     h2 {
       @extend %fwb;
       font-size: 42px;
-      color: $color-primary;
+      color: $login-primary-color;
     }
     @include meta(login-content) {
       padding: 48px 32px;
@@ -264,8 +264,8 @@
   }
   .form-button {
     width: 100%;
-    background-color: $color-primary;
-    border-color: $color-primary;
+    background-color: $login-primary-color;
+    border-color: $login-primary-color;
     --el-button-size: 50px;
     --el-font-size-base: 18px;
   }

@@ -4,10 +4,10 @@
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["node"]
+    "types": ["node"],
+    "lib": ["ES2021", "DOM", "DOM.Iterable"]
   }
 }

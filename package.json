@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@daysnap/banana": "^0.0.15",
-    "@daysnap/utils": "^0.0.93",
+    "@daysnap/utils": "^0.1.22",
     "@daysnap/vue-use": "^0.0.12",
     "@element-plus/icons-vue": "^2.3.1",
     "async-validator": "^4.2.5",

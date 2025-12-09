@@ -1,7 +1,0 @@
-export * from './disease'
-export * from './disease-business'
-export * from './disease-organization'
-export * from './disease-organization-info'
-export * from './disease-organization-member'
-export * from './drug'
-export * from './medical-guideline'

@@ -1,8 +1,6 @@
 import { formatDate } from '@daysnap/utils'
 import axios from 'axios'
 
-import { doDiseaseCreate } from '@/api'
-
 // 罕见病 mock 数据
 export function useDiseaseDevtools(options?: { onSuccess?: () => void }) {
   const id = ref('')
@@ -80,7 +78,6 @@ export function useDiseaseDevtools(options?: { onSuccess?: () => void }) {
       referDoc,
     }
 
-    await doDiseaseCreate(params)
     ElMessage.success('操作成功')
     id.value = ''
     options?.onSuccess?.()

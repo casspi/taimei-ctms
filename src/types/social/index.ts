@@ -1,7 +1,0 @@
-export * from './Advocate'
-export * from './GroupChat'
-export * from './GroupChatContent'
-export * from './GroupMember'
-export * from './Help'
-export * from './Report'
-export * from './Trend'

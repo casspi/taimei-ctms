@@ -18,6 +18,14 @@ export default defineConfig({
     },
   },
 
+  // 导入自定主题色
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@/assets/scss/element-var.scss" as *;`,
+      },
+    },
+  },
   // dev server
   server: {
     proxy: {
@@ -50,12 +58,20 @@ export default defineConfig({
     AutoImport({
       imports: ['vue', 'vue-router'],
       dts: 'typings/auto-imports.d.ts',
-      resolvers: [ElementPlusResolver()],
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: 'sass',
+        }),
+      ],
     }),
     Components({
       dts: 'typings/components.d.ts',
       extensions: ['ts', 'jsx', 'tsx', 'js', 'vue'],
-      resolvers: [ElementPlusResolver()],
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: 'sass',
+        }),
+      ],
     }),
   ],
 })

@@ -1,5 +1,0 @@
-export * from './Doctor'
-export * from './Enterprise'
-export * from './Hospital'
-export * from './Institution'
-export * from './Volunteer'

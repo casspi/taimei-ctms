@@ -1,7 +1,0 @@
-export * from './Disease'
-export * from './DiseaseBusiness'
-export * from './DiseaseOrganization'
-export * from './DiseaseOrganizationInfo'
-export * from './DiseaseOrganizationMember'
-export * from './Drug'
-export * from './MedicalGuideline'

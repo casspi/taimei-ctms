@@ -1,7 +1,7 @@
 <template>
   <div class="console-wrap">
     <div class="c-header-section">
-      <SidebarLogo class="logo-box" />
+      <PlatformLogo />
       <UserBox />
     </div>
     <div class="console-content">
@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
   import UserBox from '@/layout/components/navbar/UserBox.vue'
-  import SidebarLogo from '@/layout/components/sidebar/SidebarLogo.vue'
+  import PlatformLogo from '@/layout/components/PlatformLogo.vue'
 
   const router = useRouter()
   console.log(' router.options.routes', router.options.routes)

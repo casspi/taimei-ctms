@@ -11,38 +11,63 @@
         ref="proTableInstance"
         :hasRefresh="false"
       >
-        <ElTableColumn label="项目编号" prop="projectCode"> </ElTableColumn>
-        <ElTableColumn label="研究编号" prop="programCode"> </ElTableColumn>
-        <ElTableColumn label="研究名称" width="270">
+        <ElTableColumn label="项目编号" prop="projectCode" width="130" fixed sortable>
+        </ElTableColumn>
+        <ElTableColumn label="研究编号" prop="programCode" width="140" sortable> </ElTableColumn>
+        <ElTableColumn label="研究名称" width="270" sortable>
           <template #default="scope">
-            <ElLink
-              type="primary"
-              :underline="false"
-              @click="$router.push(`/ctms/project/${scope.row.projectId}`)"
-            >
+            <ElLink type="primary" underline="hover" @click="$router.push(`/project/dashboard`)">
               {{ scope.row.projectName || '-' }}
             </ElLink>
           </template>
         </ElTableColumn>
-        <ElTableColumn label="状态">
+        <ElTableColumn
+          label="状态"
+          width="140"
+          :filters="[
+            { text: '未开始', value: '未开始' },
+            { text: '进行中', value: '进行中' },
+            { text: '暂停', value: '暂停' },
+            { text: '终止', value: '终止' },
+            { text: '已完成', value: '已完成' },
+          ]"
+          :filter-method="(value: string, row: User, column: TableColumnCtx<User>) => {}"
+        >
           <template #default="scope">
             <ElTag>
               {{ scope.row.projectStatusName }}
             </ElTag>
           </template>
         </ElTableColumn>
-        <ElTableColumn label="项目分级" prop="projectCode"> </ElTableColumn>
-        <ElTableColumn label="PM" prop="mainPmName"> </ElTableColumn>
-        <ElTableColumn label="组长单位" prop="leadingSite"> </ElTableColumn>
-        <ElTableColumn label="主要研究者" prop="piText"> </ElTableColumn>
-        <ElTableColumn label="项目进度">
+        <ElTableColumn label="项目分级" prop="projectCode" width="140"> </ElTableColumn>
+        <ElTableColumn label="PM" prop="mainPmName" width="140"> </ElTableColumn>
+        <ElTableColumn label="组长单位" prop="leadingSite" width="140" show-overflow-tooltip>
+        </ElTableColumn>
+        <ElTableColumn label="主要研究者" prop="piText" width="140" show-overflow-tooltip>
+        </ElTableColumn>
+        <ElTableColumn label="项目进度" width="140" align="center">
           <template #default="scope"> {{ scope.row.planCenterNum }}% </template>
         </ElTableColumn>
-        <ElTableColumn label="入组进度" prop="mainPmName"> </ElTableColumn>
-        <ElTableColumn label="中心数" prop="mainPmName"> </ElTableColumn>
-        <ElTableColumn label="SAE" prop="mainPmName"> </ElTableColumn>
-        <ElTableColumn label="收藏" prop="mainPmName"> </ElTableColumn>
-        <ElTableColumn label="" prop="mainPmName"> </ElTableColumn>
+        <ElTableColumn label="入组进度" width="100" align="center">
+          <template #default="scope">
+            {{ scope.row.subjectEnroll }}/{{ scope.row.subjectPlanEnroll }}
+          </template>
+        </ElTableColumn>
+        <ElTableColumn label="中心数" prop="siteCount" width="100" align="center"> </ElTableColumn>
+        <ElTableColumn label="SAE" prop="saeCount" width="100" align="center"> </ElTableColumn>
+        <ElTableColumn label="收藏" width="70" fixed="right" align="center">
+          <template #default="scope">
+            <ElIcon size="20" @click="scope.row.isCollected = scope.row.isCollected ? 0 : 1">
+              <StarFilled style="color: #ec862c" v-if="scope.row.isCollected === 1" />
+              <Star v-else />
+            </ElIcon>
+          </template>
+        </ElTableColumn>
+        <ElTableColumn label="" width="40" fixed="right">
+          <ElIcon size="16">
+            <DataAnalysis style="color: var(--el-color-primary)" />
+          </ElIcon>
+        </ElTableColumn>
       </ProTable>
     </div>
     <div class="project-infos-r">
@@ -52,7 +77,10 @@
 </template>
 
 <script setup lang="ts">
+  import type { TableColumnCtx } from 'element-plus'
+
   import { useProTable } from '@/components'
+  import type { User } from '@/types'
   // 列表
   const [queryMetadata, proTableInstance, handleRequest] = useProTable(
     {},
@@ -183,6 +211,8 @@
     padding: 10px 16px;
     box-sizing: border-box;
     flex: 1;
+    overflow-x: auto; // 添加这行，允许内容水平滚动
+    min-width: 0; //
   }
   .project-header {
     display: flex;

@@ -111,7 +111,7 @@
           padding: j(16) 0;
         }
         .cell {
-          line-height: 1.4;
+          // line-height: 1.4;
         }
         ul {
           li {

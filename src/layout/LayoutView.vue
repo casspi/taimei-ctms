@@ -5,7 +5,7 @@
     <div class="layout-inner">
       <div class="layout-header">
         <Navbar />
-        <Tags />
+        <SiteTree />
       </div>
       <div class="layout-content">
         <RouterView />
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-  import { Navbar, Sidebar, Tags } from './components'
+  import { Navbar, Sidebar, SiteTree } from './components'
   import { useMenuCollapse } from './hooks'
 
   const { collapse, platform, toggle, withoutAnimation } = useMenuCollapse()
@@ -105,15 +105,14 @@
     --el-menu-hover-bg-color: var(--ds-menu-hover-bg-color);
     --el-menu-text-color: var(--ds-menu-text-color);
     --el-menu-hover-text-color: var(--ds-menu-hover-text-color);
-    // background-color: var(--ds-slidebar-bg-color);
-    background: linear-gradient(45deg, #f7c6b8, #f29f73);
+    --el-sub-menu-bg-color: var(--ds-sub-menu-bg-color);
+    background-color: var(--ds-slidebar-bg-color);
     .el-menu {
       border: none;
       user-select: none;
     }
     .el-menu-item {
       &.is-active {
-        color: #fff !important;
         background-color: var(--el-sub-menu-active-bg-color) !important;
       }
     }
@@ -122,6 +121,7 @@
         background-color: var(--el-sub-menu-bg-color);
         &:hover {
           background-color: var(--el-sub-menu-hover-bg-color);
+          color: var(--ds-sub-menu-hover-text-color);
         }
       }
       .el-sub-menu {

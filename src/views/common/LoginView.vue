@@ -41,6 +41,7 @@
           </ElFormItem>
           <ElFormItem prop="code">
             <ElInput
+              class="code-input"
               v-model="objForm.code"
               prefix-icon="Key"
               :disabled="loading"
@@ -272,8 +273,7 @@
   .captcha-box {
     @extend %db;
     @extend %cp;
-    // height: 24px;
-    // width: 80px;
+    width: 101px;
     height: 38px;
     background-color: #f2f2f2;
     img {
@@ -281,6 +281,14 @@
       @extend %h100;
       @extend %w100;
       object-fit: cover;
+    }
+  }
+
+  :deep() {
+    .code-input {
+      .el-input-group__append {
+        padding: 0;
+      }
     }
   }
 </style>

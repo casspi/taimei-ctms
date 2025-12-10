@@ -9,20 +9,15 @@
     </dl>
     <dl>
       <dt>罕见药典</dt>
-      <dd>
-        <ElButton type="primary" @click="handleMedicalGuideLineMock">MOCK</ElButton>
-      </dd>
+      <dd></dd>
     </dl>
   </div>
 </template>
 
 <script setup lang="ts">
   import { useDiseaseDevtools } from './useDiseaseDevtools'
-  import { useMedicalGuideLineDevtools } from './useMedicalGuideLineDevtools'
 
   const [diseaseId, handleDiseaseMock] = useDiseaseDevtools()
-
-  const handleMedicalGuideLineMock = useMedicalGuideLineDevtools()
 </script>
 
 <style lang="scss" scoped>

@@ -4,23 +4,25 @@
 :root {
   // navbar
   --ds-navbar-height: 56px;
+  --ds-logo-height: 106px;
 
   --ds-header-bg-color: #ffffff;
 
   // slidebar
-  --ds-slidebar-width: 210px;
+  --ds-slidebar-width: 160px;
   --ds-slidebar-collapse-width: 64px;
-  --ds-slidebar-bg-color: #304156;
-  --ds-slidebar-logo-bg-color: #f39f73;
+  --ds-slidebar-bg-color: rgb(67, 92, 113);
+  --ds-slidebar-logo-bg-color: #354759;
   --ds-slidebar-logo-text-color: #ffffff;
 
   // menu
-  --ds-menu-bg-color: transparent;
-  --ds-menu-hover-bg-color: rgb(240, 133, 101, 0.6);
-  --ds-menu-text-color: #fff;
-  --ds-menu-hover-text-color: #fff;
+  --ds-menu-bg-color: rgb(67, 92, 113);
+  --ds-menu-hover-bg-color: #354759;
+  --ds-menu-text-color: #eaeaea;
+  --ds-menu-hover-text-color: #409eff;
   // --el-sub-menu-bg-color:transparent;
-  --el-sub-menu-bg-color: #f99f73;
-  --el-sub-menu-hover-bg-color: rgb(240, 133, 101, 0.8);
-  --el-sub-menu-active-bg-color: #f08565;
+  --ds-sub-menu-bg-color: #344658;
+  --ds-sub-menu-hover-bg-color: rgb(67, 92, 113);
+  --ds-sub-menu-active-bg-color: #354759;
+  --ds-sub-menu-hover-text-color: #409eff;
 }

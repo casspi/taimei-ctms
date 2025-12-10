@@ -23,6 +23,7 @@
     @extend %df;
     @extend %aic;
     height: $navbar-height;
+    border-bottom: 1px solid #ebeced;
   }
   .layout-breadcrumb {
     margin-right: auto;

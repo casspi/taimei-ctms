@@ -1,3 +1,6 @@
 export * from './navbar'
+export { default as PlatformLogo } from './PlatformLogo.vue'
 export * from './sidebar'
+export { default as SiteTree } from './SiteTree.vue'
 export { default as Tags } from './Tags.vue'
+export { default as TopLogo } from './TopLogo.vue'

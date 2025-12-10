@@ -1,7 +1,7 @@
 <template>
   <div class="ctms-wrap">
     <div class="c-header-section">
-      <SidebarLogo class="logo-box" title="Clinical Trial Management System" />
+      <TopLogo />
       <ElMenu
         :default-active="activeIndex"
         class="ctms-menu"
@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
   import UserBox from '@/layout/components/navbar/UserBox.vue'
-  import SidebarLogo from '@/layout/components/sidebar/SidebarLogo.vue'
+  import TopLogo from '@/layout/components/TopLogo.vue'
   const activeIndex = ref('1')
   const handleSelect = (index: string) => {
     activeIndex.value = index

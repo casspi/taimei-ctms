@@ -2,7 +2,7 @@
   <div class="layout-navbar">
     <Hamburger />
 
-    <BreadCrumb class="layout-breadcrumb" />
+    <TopMenu class="layout-top-menu" />
 
     <ScreenFull />
 
@@ -11,9 +11,9 @@
 </template>
 
 <script setup lang="ts">
-  import BreadCrumb from './Breadcrumb.vue'
   import Hamburger from './Hamburger.vue'
   import ScreenFull from './ScreenFull.vue'
+  import TopMenu from './TopMenu.vue'
   import UserBox from './UserBox.vue'
 </script>
 
@@ -25,7 +25,7 @@
     height: $navbar-height;
     border-bottom: 1px solid #ebeced;
   }
-  .layout-breadcrumb {
+  .layout-top-menu {
     margin-right: auto;
   }
 </style>

@@ -27,7 +27,14 @@
   import SidebarCell from './SidebarCell.vue'
   import SidebarLogo from './SidebarLogo.vue'
 
-  const routes = useRouter().options.routes
+  const router = useRouter()
+
+  const routes = computed(() => {
+    const data = router.options.routes.find(
+      (item) => !item.hidden && route.path.startsWith(item.path),
+    )
+    return data?.children ?? []
+  })
   const { collapse, toggle, platform } = useMenuCollapse()
 
   const route = useRoute()

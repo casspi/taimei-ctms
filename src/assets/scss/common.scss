@@ -83,3 +83,41 @@ body {
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
 
 }
+
+
+.c-date-column {
+    padding-left: 16px;
+    li {
+      position: relative;
+      &::before {
+        content: '';
+        position: absolute;
+        left: -16px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border: 2px solid #368bd2;
+        border-radius: 5px;
+        box-sizing: border-box;
+        z-index: 2;
+        background-color: #fff;
+      }
+      &:first-child::after {
+        content: '';
+        position: absolute;
+        left: -11px;
+        top: 50%;
+        height: 100%;
+        border-right: 1px dashed rgb(170, 170, 170);
+        z-index: 1;
+      }
+      .c-tag-warning {
+        font-size: 12px;
+        padding: 0 2px;
+        background-color: #f95c74;
+        color: #fff;
+      }
+    }
+  }

@@ -16,7 +16,11 @@
         <ElTableColumn label="研究编号" prop="programCode" width="140" sortable> </ElTableColumn>
         <ElTableColumn label="研究名称" width="270" sortable>
           <template #default="scope">
-            <ElLink type="primary" underline="hover" @click="$router.push(`/project/dashboard`)">
+            <ElLink
+              type="primary"
+              underline="hover"
+              @click="$router.push(`/project/process/dashboard`)"
+            >
               {{ scope.row.projectName || '-' }}
             </ElLink>
           </template>

@@ -5,7 +5,7 @@
         <slot name="title"></slot>
       </div>
       <div class="pro-table-actions">
-        <ElButton
+        <!-- <ElButton
           plain
           icon="RefreshRight"
           :loading="loading"
@@ -13,7 +13,7 @@
           @click="$emit('request', {})"
         >
           刷新
-        </ElButton>
+        </ElButton> -->
         <slot name="actions"></slot>
       </div>
     </div>
@@ -108,7 +108,7 @@
       .el-table__body-wrapper {
         font-size: j(12);
         .el-table__cell {
-          padding: j(16) 0;
+          padding: j(6) 0;
         }
         .cell {
           // line-height: 1.4;

@@ -113,14 +113,14 @@
     }
     .el-menu-item {
       &.is-active {
-        background-color: var(--el-sub-menu-active-bg-color) !important;
+        // background-color: var(--el-sub-menu-active-bg-color) !important;
       }
     }
     .el-sub-menu {
       .el-menu-item {
         background-color: var(--el-sub-menu-bg-color);
         &:hover {
-          background-color: var(--el-sub-menu-hover-bg-color);
+          // background-color: var(--el-sub-menu-hover-bg-color);
           color: var(--ds-sub-menu-hover-text-color);
         }
       }
@@ -158,6 +158,6 @@
   .layout-content {
     @extend %bsb;
     padding: 16px;
-    padding-top: calc($navbar-height + 37px + 16px);
+    padding-top: calc($navbar-height + 50px + 16px);
   }
 </style>

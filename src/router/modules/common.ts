@@ -28,6 +28,7 @@ export default [
   {
     path: '/ctms',
     component: () => import('@/views/ctms/CtmsView.vue'),
+    hidden: true,
     meta: {
       title: 'CTMS',
       requiresAuth: 1,

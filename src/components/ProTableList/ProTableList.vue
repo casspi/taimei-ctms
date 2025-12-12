@@ -17,13 +17,18 @@
         <slot name="actions"></slot>
       </div>
     </div>
-    <div class="pro-table-content" v-loading="loading" element-loading-text="加载中">
+    <div
+      class="pro-table-content"
+      :style="{ height: height }"
+      v-loading="loading"
+      element-loading-text="加载中"
+    >
       <slot name="table" :data="data">
         <ElTable
           width="100%"
           table-layout="fixed"
           :data="data"
-          :height="height"
+          height="100%"
           @selection-change="handleSelectionChange"
         >
           <template #empty>
@@ -42,7 +47,7 @@
       :current-page="pageIndex"
       :page-size="pageSize"
       :total="total"
-      :page-sizes="[10, 20, 50, 100]"
+      :page-sizes="[10, 20, 30, 40]"
       @update:current-page="$emit('request', { pageIndex: $event })"
       @update:page-size="$emit('request', { pageSize: $event, pageIndex: 1 })"
     />

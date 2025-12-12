@@ -9,7 +9,7 @@ export enum ReportAudit {
 
   PASS = 1,
 
-  POST_WITHDRAWAL = 3,
+  POST_WITHDRAWAL = -3,
 }
 
 export const ReportAuditType = [

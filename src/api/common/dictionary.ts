@@ -36,18 +36,32 @@ export enum DictionaryType {
   DIC_ORDER_STATUS = 'DIC_ORDER_STATUS', // 订单状态 1:上架,0:下架
 }
 
-// 根据字典类型和代码获得相应的字典的下级代码集（不包含下级）的JSON结构
-export const reqDictionaryListType = (data: { type: string }) =>
-  curl<Dictionary[]>(`common/dictionary/list/{type}`, data)
-
-// 根据字典类型和代码获得相应的字典的下级代码集（不包括下级）的JSON结构
-export const reqDictionaryListTypeCode = (data: { type: string; code: string }) =>
-  curl(`common/dictionary/list/{type}/{code}`, data)
-
-// 根据字典类型获得相应的字典代码集（包括下级）的JSON结构
-export const reqDictionaryTreeType = (data: { type: string }) =>
-  curl(`common/dictionary/tree/{type}`, data)
-
-// 根据字典类型和代码获得相应的字典的下级代码集（包括下级）的JSON结构
-export const reqDictionaryTreeTypeCode = (data: { type: string; code: string }) =>
-  curl(`common/dictionary/tree/{type}/{code}`, data)
+// 监查类型
+export const reqDictionaryInspectType = () =>
+  curl<Dictionary[]>(`api/ccp-web/getInspectTypeList`).catch(() => [
+    {
+      name: '中心筛选访视',
+      value: 'ddc3d5097ace4adcbb3c5693b9b8d5e8',
+      needApproval: true,
+    },
+    {
+      name: '中心启动访视',
+      value: '8a81c0a5696c9baa01696fd9286d02b1',
+      needApproval: true,
+    },
+    {
+      name: '中心监查访视',
+      value: '8a81c0a5696c9baa01696fd9286d02b2',
+      needApproval: true,
+    },
+    {
+      name: '中心关闭访视',
+      value: '8a81c0a5696c9baa01696fd9286d02b3',
+      needApproval: true,
+    },
+    {
+      name: '中心协同访视',
+      value: '525b9f9509c941deb9da5d82f0ccb2af',
+      needApproval: true,
+    },
+  ])

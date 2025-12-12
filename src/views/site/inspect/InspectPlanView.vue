@@ -1,5 +1,13 @@
 <template>
-  <ProTable :request="handleRequest" :query-metadata="queryMetadata" ref="proTableInstance">
+  <ProTable
+    class="c-table-fixed-height"
+    :request="handleRequest"
+    :query-metadata="queryMetadata"
+    ref="proTableInstance"
+    :pageSize="40"
+    height="calc(100% - 48px - 48px)"
+  >
+    {{ queryMetadata }}
     <template #actions>
       <ProActionButton type="primary" icon="Plus" @click="handleAddedOrUpdate()">
         新增
@@ -7,22 +15,22 @@
       <ProActionButton plain @click="handleAddedOrUpdate()"> 下载Excel </ProActionButton>
     </template>
 
-    <ElTableColumn label="计划" width="250">
+    <ElTableColumn label="计划" width="340">
       <template #default="scope">
         <PlanCell :data="scope.row" />
       </template>
     </ElTableColumn>
 
-    <ElTableColumn label="监查员" width="100" prop="inspect_user" />
-    <ElTableColumn label="监查次数" width="100" prop="visit_number" />
+    <ElTableColumn label="监查员" width="120" prop="inspect_user" />
+    <ElTableColumn label="监查次数" width="120" prop="visit_number" />
     <ElTableColumn
       label="监查时长(h)"
-      width="100"
+      width="120"
       prop="real_duration_hour"
       :formatter="(row) => formatToFixedOneString(row.real_duration_hour)"
     />
     <DateTableColumn
-      label="预期监查时间"
+      label="时间"
       width="190"
       :filters="[
         { text: '开始时间顺序', value: '1' },
@@ -32,35 +40,16 @@
       ]"
       :filter-multiple="true"
     />
-    <DateTableColumn
-      label="实际监查时间"
-      :keys="['real_start_time', 'real_end_time']"
-      width="190"
-      :filters="[
-        { text: '开始时间顺序', value: '1' },
-        { text: '开始时间倒序', value: '2' },
-        { text: '结束时间顺序', value: '3' },
-        { text: '结束时间倒序', value: '4' },
-      ]"
-      :filter-multiple="true"
-    />
-    <DateTableColumn
-      label="执行情况"
-      :keys="['report_submit_date', 'report_finalize_date']"
-      width="350"
-      use-raw
-    >
-      <template #default="{ row }">
-        <li>
-          目标提交 {{ row.report_submit_date }}
-          <span v-if="row.submit_late_case" class="c-tag-warning">提交延时</span>
-        </li>
-        <li>
-          目标定稿 {{ row.report_finalize_date }}
-          <span v-if="row.finalize_late_case" class="c-tag-warning">定稿延时</span>
-        </li>
+    <ElTableColumn label="监查状态" width="140" prop="report_status_name" />
+
+    <ElTableColumn label="执行延期" width="140">
+      <template #default="scope">
+        <span class="c-flex-center">
+          {{ scope.row.real_lase_case }}
+          <DelayInfo :row="scope.row" />
+        </span>
       </template>
-    </DateTableColumn>
+    </ElTableColumn>
 
     <AuditTableColumn label="审批状态" />
 
@@ -98,14 +87,13 @@
 <script setup lang="ts">
   import { useAsyncTask } from '@daysnap/vue-use'
 
-  import { DictionaryType, reqDictionaryListType, reqInspectList } from '@/api'
+  import { reqDictionaryInspectType, reqInspectList } from '@/api'
   import { useProDialogForm, useProH5Preview, useProTable } from '@/components'
   import { PD } from '@/stores'
-  import { formatToFixedOneString, getKeywordFields, getProvinceAndCityFields } from '@/utils'
+  import { formatToFixedOneString, getProvinceAndCityFields } from '@/utils'
 
+  import DelayInfo from '../components/DelayInfo.vue'
   import PlanCell from '../components/PlanCell.vue'
-
-  const statusTypes = ['info', 'warning', 'success', 'danger'] as const
 
   // 预览
   const [proH5PreviewInstance, handleH5Preview] = useProH5Preview()
@@ -113,17 +101,19 @@
   // 列表
   const [queryMetadata, proTableInstance, handleRequest] = useProTable(
     {
-      ...getKeywordFields(),
-      projectName: {
-        is: 'form-input',
+      inspectTypeList: {
+        is: 'form-select',
         value: '',
-        label: '项目名称',
+        label: '监查类型',
+        labelKey: 'name',
+        props: {
+          multiple: true,
+        },
       },
-      provinceAndCity: getProvinceAndCityFields({ query: true }),
-      projectStatus: {
+      states: {
         value: '',
         is: 'form-select',
-        label: '项目状态',
+        label: '审批状态',
       },
     },
     async ([currentPage, pageSize], query) => {
@@ -134,21 +124,14 @@
 
   const { data: mapOptions } = useAsyncTask(
     async () => {
-      const [types, status] = await Promise.all([
-        reqDictionaryListType({
-          type: DictionaryType.DIC_PROJECT_TYPE,
-        }),
-        reqDictionaryListType({
-          type: DictionaryType.DIC_PROJECT_STATUS,
-        }),
-      ])
-      queryMetadata.projectStatus.options = status
-      return { types, status }
+      const [inspectTypes] = await Promise.all([reqDictionaryInspectType])
+      queryMetadata.inspectTypeList.options = inspectTypes
+      return { inspectTypes }
     },
     {
       immediate: true,
       throwError: true,
-      initialValue: { types: [], status: [] },
+      initialValue: { inspectTypes: [] },
     },
   )
 

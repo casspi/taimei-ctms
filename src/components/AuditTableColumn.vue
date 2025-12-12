@@ -10,17 +10,7 @@
             <i class="i-dot"></i>
             <span>{{ scope.row[auditKey] }}</span>
           </div>
-          <ElPopover
-            placement="bottom"
-            title="Title"
-            :width="200"
-            trigger="click"
-            content="this is content, this is content, this is content"
-          >
-            <template #reference>
-              <ElLink type="primary">查看原因</ElLink>
-            </template>
-          </ElPopover>
+          <ResonPopover v-if="scope.row.report_audit" :row="scope.row" />
         </slot>
       </div>
     </template>
@@ -29,6 +19,7 @@
 
 <script setup lang="ts">
   import { ReportAuditTypeValueMap } from '@/utils/constants'
+  import ResonPopover from '@/views/site/components/ResonPopover.vue'
   defineProps({
     auditKey: {
       type: String,

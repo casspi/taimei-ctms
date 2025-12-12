@@ -30,7 +30,7 @@
           <RouterLink to="/ctms">论坛</RouterLink>
         </ElMenuItem>
       </ElMenu>
-      <UserBox />
+      <UserBox class="layout-user-box-white" />
     </div>
     <div class="layout-content">
       <RouterView />

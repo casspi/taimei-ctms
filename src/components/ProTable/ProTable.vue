@@ -8,7 +8,7 @@
     />
 
     <ProTableList
-      v-bind="{ ...status, ...$attrs }"
+      v-bind="{ ...status, ...omit($attrs, ['class']) }"
       :data="data"
       :has-pagination="hasPagination"
       :height="height"
@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
   import { banana } from '@daysnap/banana'
-  import { filterEmptyValue } from '@daysnap/utils'
+  import { filterEmptyValue, omit } from '@daysnap/utils'
 
   import { proTableProps } from './types'
   import { useProTablePaging, type UseProTablePagingParams } from './useProTablePaging'
@@ -68,6 +68,12 @@
     :deep {
       .pro-query-form {
         margin-bottom: j(16);
+      }
+      &.c-table-fixed-height {
+        height: calc(100vh - var(--ds-navbar-height) - 37px - 16px - 16px);
+        .pro-table-list {
+          overflow-y: auto;
+        }
       }
       .pro-table-list {
         @extend %df1;

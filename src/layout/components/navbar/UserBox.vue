@@ -150,6 +150,8 @@
     color: #435c70 !important;
     gap: 6px;
     align-items: center;
+    height: 100%;
+    padding: 0 24px;
     i {
       font-size: 16px;
       cursor: pointer;

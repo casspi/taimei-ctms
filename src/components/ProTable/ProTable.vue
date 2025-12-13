@@ -1,5 +1,5 @@
 <template>
-  <div class="pro-table">
+  <div class="pro-table c-table-fixed-height">
     <ProQueryForm
       v-if="hasQuery"
       :metadata="queryMetadata"
@@ -11,7 +11,7 @@
       v-bind="{ ...status, ...omit($attrs, ['class']) }"
       :data="data"
       :has-pagination="hasPagination"
-      :height="height"
+      :height="height || 'calc(100% - 48px - 48px)'"
       @request="reqTableList"
     >
       <template #actions>

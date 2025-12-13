@@ -113,7 +113,7 @@
       .el-table__body-wrapper {
         font-size: j(12);
         .el-table__cell {
-          padding: j(6) 0;
+          padding: j(10) 0;
         }
         .cell {
           // line-height: 1.4;

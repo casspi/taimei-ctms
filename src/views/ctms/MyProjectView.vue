@@ -14,13 +14,9 @@
         <ElTableColumn label="项目编号" prop="projectCode" width="130" fixed sortable>
         </ElTableColumn>
         <ElTableColumn label="研究编号" prop="programCode" width="140" sortable> </ElTableColumn>
-        <ElTableColumn label="研究名称" width="270" sortable>
+        <ElTableColumn label="研究名称" min-width="270" sortable>
           <template #default="scope">
-            <ElLink
-              type="primary"
-              underline="hover"
-              @click="$router.push(`/project/process/dashboard`)"
-            >
+            <ElLink type="primary" underline="hover" @click="$router.push(`/site/inspect/plan`)">
               {{ scope.row.projectName || '-' }}
             </ElLink>
           </template>

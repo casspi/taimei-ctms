@@ -1,13 +1,10 @@
 <template>
   <ProTable
-    class="c-table-fixed-height"
     :request="handleRequest"
     :query-metadata="queryMetadata"
     ref="proTableInstance"
     :pageSize="40"
-    height="calc(100% - 48px - 48px)"
   >
-    {{ queryMetadata }}
     <template #actions>
       <ProActionButton type="primary" icon="Plus" @click="handleAddedOrUpdate()">
         新增
@@ -15,23 +12,23 @@
       <ProActionButton plain @click="handleAddedOrUpdate()"> 下载Excel </ProActionButton>
     </template>
 
-    <ElTableColumn label="计划" width="340">
+    <ElTableColumn label="计划" min-width="260">
       <template #default="scope">
         <PlanCell :data="scope.row" />
       </template>
     </ElTableColumn>
 
-    <ElTableColumn label="监查员" width="120" prop="inspect_user" />
-    <ElTableColumn label="监查次数" width="120" prop="visit_number" />
+    <ElTableColumn label="监查员" min-width="130" prop="inspect_user" />
+    <ElTableColumn label="监查次数" min-width="130" prop="visit_number" />
     <ElTableColumn
       label="监查时长(h)"
-      width="120"
+      min-width="130"
       prop="real_duration_hour"
       :formatter="(row) => formatToFixedOneString(row.real_duration_hour)"
     />
     <DateTableColumn
       label="时间"
-      width="190"
+      min-width="180"
       :filters="[
         { text: '开始时间顺序', value: '1' },
         { text: '开始时间倒序', value: '2' },
@@ -40,9 +37,9 @@
       ]"
       :filter-multiple="true"
     />
-    <ElTableColumn label="监查状态" width="140" prop="report_status_name" />
+    <ElTableColumn label="监查状态" min-width="130" prop="report_status_name" />
 
-    <ElTableColumn label="执行延期" width="140">
+    <ElTableColumn label="执行延期" min-width="130">
       <template #default="scope">
         <span class="c-flex-center">
           {{ scope.row.real_lase_case }}
@@ -51,52 +48,90 @@
       </template>
     </ElTableColumn>
 
-    <AuditTableColumn label="审批状态" />
+    <AuditTableColumn
+      label="审批状态"
+      auditKey="plan_status"
+      auditCode="plan_status_code"
+      :dicMap="PlanStatusTypeValueMap"
+      min-width="150"
+    />
 
     <ProTableActionsColumn>
       <template #default="scope">
         <ProTableActionButton
-          :pd="PD.project.list.edit"
+          v-if="scope.row.buttons.includes('view_btn')"
+          type="primary"
+          @click="handleAddedOrUpdate(scope.row)"
+        >
+          查看
+        </ProTableActionButton>
+
+        <ProTableActionButton
+          v-if="scope.row.buttons.includes('edit_btn')"
           type="primary"
           @click="handleAddedOrUpdate(scope.row)"
         >
           编辑
         </ProTableActionButton>
+        <DeleteButton
+          v-if="scope.row.buttons.includes('delete_btn')"
+          type="primary"
+          @delete="handleDelete(scope.row)"
+        />
         <ProTableActionButton
-          type="success"
-          @click="handleH5Preview(`project/${scope.row.projectId}`)"
+          v-if="scope.row.buttons.includes('submit_btn')"
+          type="primary"
+          @click="handleAddedOrUpdate(scope.row)"
         >
-          预览
+          提交
         </ProTableActionButton>
         <ProTableActionButton
-          :pd="PD.project.list.delete"
-          type="danger"
-          @click="handleDelete(scope.row)"
+          v-if="scope.row.buttons.includes('viewReport_btn')"
+          type="primary"
+          @click="handleAddedOrUpdate(scope.row)"
         >
-          删除
+          查看报告
+        </ProTableActionButton>
+        <ProTableActionButton
+          v-if="scope.row.buttons.includes('writeReport_btn')"
+          type="primary"
+          @click="handleAddedOrUpdate(scope.row)"
+        >
+          撰写报告
+        </ProTableActionButton>
+        <ProTableActionButton
+          v-if="scope.row.buttons.includes('blankReport_btn')"
+          type="primary"
+          @click="handleAddedOrUpdate(scope.row)"
+        >
+          查看空白报告
+        </ProTableActionButton>
+
+        <ProTableActionButton
+          v-if="scope.row.buttons.includes('export_btn')"
+          type="primary"
+          @click="handleAddedOrUpdate(scope.row)"
+        >
+          导出
         </ProTableActionButton>
       </template>
     </ProTableActionsColumn>
   </ProTable>
 
   <ProDialogForm ref="proDialogFormInstance" />
-
-  <ProH5Preview ref="proH5PreviewInstance" />
 </template>
 
 <script setup lang="ts">
   import { useAsyncTask } from '@daysnap/vue-use'
 
   import { reqDictionaryInspectType, reqInspectList } from '@/api'
-  import { useProDialogForm, useProH5Preview, useProTable } from '@/components'
-  import { PD } from '@/stores'
+  import { useProDialogForm, useProTable } from '@/components'
+  import DeleteButton from '@/components/DeleteButton.vue'
   import { formatToFixedOneString, getProvinceAndCityFields } from '@/utils'
+  import { PlanStatusTypeValueMap } from '@/utils/constants'
 
   import DelayInfo from '../components/DelayInfo.vue'
   import PlanCell from '../components/PlanCell.vue'
-
-  // 预览
-  const [proH5PreviewInstance, handleH5Preview] = useProH5Preview()
 
   // 列表
   const [queryMetadata, proTableInstance, handleRequest] = useProTable(
@@ -226,8 +261,7 @@
   )
 
   // 删除
-  const handleDelete = async (item: Project) => {
-    await ElMessageBox.confirm(`确认删除该数据？`)
+  const handleDelete = async (item: any) => {
     const { projectId } = item
     // await doProjectDelete({ projectId })
     proTableInstance.value.reload()

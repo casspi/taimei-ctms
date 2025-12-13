@@ -1,5 +1,10 @@
 <template>
-  <ProTable :request="handleRequest" :query-metadata="queryMetadata" ref="proTableInstance">
+  <ProTable
+    class="c-table-fixed-height"
+    :request="handleRequest"
+    :query-metadata="queryMetadata"
+    ref="proTableInstance"
+  >
     <template #actions>
       <ProActionButton type="primary" icon="Plus" @click="handleAddedOrUpdate()">
         新增
@@ -7,17 +12,17 @@
       <ProActionButton plain @click="handleAddedOrUpdate()"> 下载Excel </ProActionButton>
     </template>
 
-    <ElTableColumn label="计划" width="250">
+    <ElTableColumn label="报告" width="190">
       <template #default="scope">
         <PlanCell :data="scope.row" />
       </template>
     </ElTableColumn>
 
-    <ElTableColumn label="监查员" width="100" prop="inspect_user" />
-    <ElTableColumn label="监查次数" width="100" prop="visit_number" />
+    <ElTableColumn label="监查员" width="130" prop="inspect_user" />
+    <ElTableColumn label="监查次数" width="130" prop="visit_number" />
     <ElTableColumn
       label="监查时长(h)"
-      width="100"
+      width="150"
       prop="real_duration_hour"
       :formatter="(row) => formatToFixedOneString(row.real_duration_hour)"
     />
@@ -45,9 +50,9 @@
       :filter-multiple="true"
     />
     <DateTableColumn
+      width="250"
       label="执行情况"
       :keys="['report_submit_date', 'report_finalize_date']"
-      width="350"
       use-raw
     >
       <template #default="{ row }">
@@ -67,48 +72,47 @@
     <ProTableActionsColumn>
       <template #default="scope">
         <ProTableActionButton
-          :pd="PD.project.list.edit"
+          v-if="scope.row.buttons.includes('viewReport_btn')"
           type="primary"
           @click="handleAddedOrUpdate(scope.row)"
         >
-          编辑
+          查看报告
         </ProTableActionButton>
         <ProTableActionButton
-          type="success"
-          @click="handleH5Preview(`project/${scope.row.projectId}`)"
+          v-if="scope.row.buttons.includes('writeReport_btn')"
+          type="primary"
+          @click="handleAddedOrUpdate(scope.row)"
         >
-          预览
+          撰写报告
         </ProTableActionButton>
         <ProTableActionButton
-          :pd="PD.project.list.delete"
-          type="danger"
-          @click="handleDelete(scope.row)"
+          v-if="scope.row.buttons.includes('submit_btn')"
+          type="primary"
+          @click="handleAddedOrUpdate(scope.row)"
         >
-          删除
+          提交
+        </ProTableActionButton>
+        <ProTableActionButton type="primary" @click="handleAddedOrUpdate(scope.row)">
+          痕迹
         </ProTableActionButton>
       </template>
     </ProTableActionsColumn>
   </ProTable>
 
   <ProDialogForm ref="proDialogFormInstance" />
-
-  <ProH5Preview ref="proH5PreviewInstance" />
 </template>
 
 <script setup lang="ts">
   import { useAsyncTask } from '@daysnap/vue-use'
 
   import { reqInspectReportList } from '@/api'
-  import { useProDialogForm, useProH5Preview, useProTable } from '@/components'
+  import { useProDialogForm, useProTable } from '@/components'
   import { PD } from '@/stores'
   import { formatToFixedOneString, getKeywordFields, getProvinceAndCityFields } from '@/utils'
 
   import PlanCell from '../components/PlanCell.vue'
 
   const statusTypes = ['info', 'warning', 'success', 'danger'] as const
-
-  // 预览
-  const [proH5PreviewInstance, handleH5Preview] = useProH5Preview()
 
   // 列表
   const [queryMetadata, proTableInstance, handleRequest] = useProTable(
@@ -127,7 +131,7 @@
       },
     },
     async ([currentPage, pageSize], query) => {
-      const { pagination } = await reqInspectReportList({ currentPage, pageSize, ...query })
+      const { pagination } = await reqInspectReportList()
       return [pagination.rows, pagination.count]
     },
   )

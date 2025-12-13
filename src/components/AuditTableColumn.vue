@@ -3,14 +3,14 @@
     <template #default="scope">
       <div
         class="c-status-column"
-        :class="`c-status-column--${ReportAuditTypeValueMap[scope.row[auditCode]]?.iconType}`"
+        :class="`c-status-column--${dicMap[scope.row[auditCode]]?.iconType}`"
       >
         <slot :row="scope.row">
           <div class="inner">
             <i class="i-dot"></i>
             <span>{{ scope.row[auditKey] }}</span>
           </div>
-          <ResonPopover v-if="scope.row.report_audit" :row="scope.row" />
+          <ResonPopover v-if="scope.row[auditCode] === 3" :row="scope.row" />
         </slot>
       </div>
     </template>
@@ -28,6 +28,10 @@
     auditCode: {
       type: String,
       default: 'report_audit_code',
+    },
+    dicMap: {
+      type: Array as PropType<typeof ReportAuditTypeValueMap>,
+      default: () => ReportAuditTypeValueMap,
     },
   })
 </script>

@@ -7,7 +7,7 @@ import { errorCode } from '@/utils'
 
 import { log } from './log'
 
-export const baseURL = 'https://vue.ruoyi.vip/prod-api/'
+export const baseURL = 'https://www.baidu.com/' //'https://vue.ruoyi.vip/prod-api/'
 
 const instance = axios.create({
   baseURL,

@@ -13,9 +13,11 @@
 
   import { proActionButtonProps } from '../ProActionButton'
 
-  defineEmits(['click'])
+  defineEmits(['click', 'delete'])
 
-  const props = defineProps(proActionButtonProps)
+  const props = defineProps({
+    ...proActionButtonProps,
+  })
 
   const { has } = usePermissionStore()
 
@@ -32,11 +34,16 @@
   @use '@/assets/scss/define.scss' as *;
   .pro-table-action-button {
     @extend %dib;
+    min-width: auto !important;
     :deep {
       .el-button {
         text-align: left;
         line-height: 1.3;
         white-space: normal;
+        font-size: 12px;
+      }
+      .el-button--primary.is-link {
+        color: #409eff;
       }
     }
   }

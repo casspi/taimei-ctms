@@ -12,7 +12,7 @@ export default [
   },
 
   {
-    path: '/',
+    path: '/console',
     component: () => import('@/views/common/ConsoleView.vue'),
     hidden: true,
     meta: { title: '控制台', requiresAuth: 1 },
@@ -26,7 +26,7 @@ export default [
   },
 
   {
-    path: '/ctms',
+    path: '/',
     component: () => import('@/views/ctms/CtmsView.vue'),
     hidden: true,
     meta: {

@@ -87,7 +87,7 @@
         </ElCol>
 
         <ElCol :span="8">
-          <ElFormItem>
+          <ElFormItem label-width="0">
             <ElButton type="primary" icon="Search" :loading="loading" @click="handleQuery">
               查询
             </ElButton>

@@ -2,7 +2,7 @@
   <div class="pro-query-form">
     <ElForm :model="formInline" label-position="right" label-width="120px">
       <ElRow :gutter="16">
-        <ElCol v-for="(item, key) in computedFields" :key="key" :span="item.span ?? 8">
+        <ElCol v-for="(item, key) in computedFields" :key="key" :span="item.span ?? 6">
           <ElFormItem :label="item.label">
             <ElInput
               v-if="item.is === 'form-input'"
@@ -86,8 +86,8 @@
           </ElFormItem>
         </ElCol>
 
-        <ElCol :span="8">
-          <ElFormItem label-width="0">
+        <ElCol :span="6">
+          <ElFormItem>
             <ElButton type="primary" icon="Search" :loading="loading" @click="handleQuery">
               查询
             </ElButton>

@@ -64,6 +64,7 @@
     @extend %df;
     @extend %fdc;
     @extend %w100;
+    font-size: 12px;
     min-height: calc(100vh - var(--ds-navbar-height) - 37px - 16px - 16px);
     :deep {
       .pro-query-form {

@@ -2,7 +2,7 @@
   <div class="pro-table-list">
     <div v-if="hasRefresh" class="pro-table-header">
       <div class="pro-table-title">
-        <slot name="title"></slot>
+        <slot name="title">111</slot>
       </div>
       <div class="pro-table-actions">
         <!-- <ElButton

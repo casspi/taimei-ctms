@@ -22,5 +22,10 @@
     span {
       margin: 0 8px;
     }
+    :deep() {
+      .el-link {
+        font-size: 12px;
+      }
+    }
   }
 </style>

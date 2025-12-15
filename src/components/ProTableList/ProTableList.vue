@@ -1,22 +1,5 @@
 <template>
   <div class="pro-table-list">
-    <div v-if="hasRefresh" class="pro-table-header">
-      <div class="pro-table-title">
-        <slot name="title">111</slot>
-      </div>
-      <div class="pro-table-actions">
-        <!-- <ElButton
-          plain
-          icon="RefreshRight"
-          :loading="loading"
-          v-if="hasRefresh"
-          @click="$emit('request', {})"
-        >
-          刷新
-        </ElButton> -->
-        <slot name="actions"></slot>
-      </div>
-    </div>
     <div
       class="pro-table-content"
       :style="{ height: height }"
@@ -82,10 +65,6 @@
       type: Boolean,
       default: false,
     },
-    hasRefresh: {
-      type: Boolean,
-      default: true,
-    },
   })
 
   const selected = inject(multipleSelectionKey, null) as Ref<any[]>
@@ -133,20 +112,7 @@
       }
     }
   }
-  .pro-table-header {
-    @extend %df;
-    @extend %aic;
-    @extend %fww;
-    padding: 0 16px;
-    margin-bottom: 16px;
-    h2 {
-      font-size: 16px;
-    }
-  }
-  .pro-table-actions {
-    flex-shrink: 0;
-    margin-left: auto;
-  }
+
   .pro-table-content {
     padding: 0 16px;
   }

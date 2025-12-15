@@ -28,6 +28,10 @@ export const proTableProps = {
     type: Boolean,
     default: true,
   },
+  hasRefresh: {
+    type: Boolean,
+    default: true,
+  },
 }
 
 export type ProTableProps = ExtractPropTypes<typeof proTableProps>

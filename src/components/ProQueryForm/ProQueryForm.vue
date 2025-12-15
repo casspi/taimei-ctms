@@ -1,8 +1,8 @@
 <template>
   <div class="pro-query-form">
-    <ElForm :model="formInline" label-position="right" label-width="120px">
-      <ElRow :gutter="16">
-        <ElCol v-for="(item, key) in computedFields" :key="key" :span="item.span ?? 6">
+    <ElForm :model="formInline" label-position="right">
+      <ElRow :gutter="18">
+        <ElCol v-for="(item, key) in computedFields" :key="key" :span="item.span ?? 8">
           <ElFormItem :label="item.label">
             <ElInput
               v-if="item.is === 'form-input'"
@@ -86,12 +86,10 @@
           </ElFormItem>
         </ElCol>
 
-        <ElCol :span="6">
+        <ElCol :span="8">
           <ElFormItem>
-            <ElButton type="primary" icon="Search" :loading="loading" @click="handleQuery">
-              查询
-            </ElButton>
-            <ElButton icon="RefreshRight" @click="handleReset">重置</ElButton>
+            <ElButton type="primary" :loading="loading" @click="handleQuery"> 查询 </ElButton>
+            <ElButton @click="handleReset">重置</ElButton>
           </ElFormItem>
         </ElCol>
       </ElRow>
@@ -160,8 +158,9 @@
   .pro-query-form {
     @extend %df;
     @extend %pr;
-    padding: j(16);
     background-color: #fff;
+    max-width: 1000px;
+    min-width: 800px;
     :deep {
       .el-date-editor {
         --el-date-editor-width: 100%;

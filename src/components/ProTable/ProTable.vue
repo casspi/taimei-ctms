@@ -1,19 +1,34 @@
 <template>
   <div class="pro-table c-table-fixed-height">
-    <ProQueryForm
-      v-if="hasQuery"
-      :metadata="queryMetadata"
-      :loading="status.loading"
-      @query="handleQuery"
-    />
+    <div v-if="hasRefresh" class="pro-table-header">
+      <ProQueryForm
+        class="pro-query-form"
+        :metadata="queryMetadata"
+        :loading="status.loading"
+        @query="handleQuery"
+      />
+      <div class="pro-table-actions">
+        <!-- <ElButton
+          plain
+          icon="RefreshRight"
+          :loading="loading"
+          v-if="hasRefresh"
+          @click="$emit('request', {})"
+        >
+          刷新
+        </ElButton> -->
+        <slot name="actions"></slot>
+      </div>
+    </div>
 
     <ProTableList
       v-bind="{ ...status, ...omit($attrs, ['class']) }"
       :data="data"
       :has-pagination="hasPagination"
-      :height="height || 'calc(100% - 48px - 48px)'"
+      :height="height || 'calc(100% - 48px)'"
       @request="reqTableList"
     >
+      <!-- <template #query-form> </template> -->
       <template #actions>
         <slot name="actions" :data="data"> </slot>
       </template>
@@ -60,6 +75,23 @@
 
 <style lang="scss" scoped>
   @use '@/assets/scss/define.scss' as *;
+
+  .pro-table-header {
+    @extend %df;
+    @extend %fww;
+    padding: 16px 16px 0 16px;
+    // margin-bottom: 16px;
+    background-color: #fff;
+
+    h2 {
+      font-size: 16px;
+    }
+  }
+  .pro-table-actions {
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
   .pro-table {
     @extend %df;
     @extend %fdc;

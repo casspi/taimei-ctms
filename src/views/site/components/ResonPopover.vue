@@ -8,7 +8,7 @@
         <div class="info-header">
           <h4>通过后被撤回</h4>
           <span class="tips">您可以联系审批员，查询原因。</span>
-          <ElIcon size="20" class="c-pointer" @click="refPopover?.hide()"><Close /></ElIcon>
+          <ElIcon size="20" class="c-pointer" @click="refPopover?.hide()"><CloseBold /></ElIcon>
         </div>
         <div class="info-list">
           <h4>审批记录</h4>

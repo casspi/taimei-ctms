@@ -117,6 +117,9 @@
         }
         .cell {
           // line-height: 1.4;
+          .el-link {
+            font-size: 12px;
+          }
         }
         ul {
           li {

@@ -1,98 +1,198 @@
 <template>
   <div class="pro-query-form">
     <ElForm :model="formInline" label-position="right">
-      <ElRow :gutter="18">
-        <ElCol v-for="(item, key) in computedFields" :key="key" :span="item.span ?? 8">
-          <ElFormItem :label="item.label">
-            <ElInput
-              v-if="item.is === 'form-input'"
-              v-model="item.value"
-              placeholder="请填写"
-              clearable
-              v-bind="item.props"
+      <ElSpace span="16">
+        <!-- <ElCol v-for="(item, key) in computedFields" :key="key" :span="item.span ?? 8"> -->
+        <ElFormItem v-for="(item, key) in computedFields" :key="key" :label="item.label">
+          <ElInput
+            v-if="item.is === 'form-input'"
+            v-model="item.value"
+            placeholder="请填写"
+            clearable
+            v-bind="item.props"
+          />
+          <ElSelect
+            v-else-if="item.is === 'form-select'"
+            v-model="item.value"
+            placeholder="请选择"
+            clearable
+            filterable
+            v-bind="item.props"
+          >
+            <ElOption
+              v-for="(option, index) in item.options"
+              v-bind="option.props"
+              :key="index"
+              :label="option[item.labelKey || 'label'] || option"
+              :value="option[item.valueKey || 'value'] ?? option"
             />
-            <ElSelect
-              v-else-if="item.is === 'form-select'"
-              v-model="item.value"
-              placeholder="请选择"
-              clearable
-              filterable
-              v-bind="item.props"
+          </ElSelect>
+          <ElRadioGroup v-else-if="item.is === 'form-radio'" v-model="item.value">
+            <ElRadio
+              v-for="(option, index) in item.options"
+              v-bind="option.props"
+              :key="index"
+              :value="option[item.valueKey || 'value'] ?? option"
             >
-              <ElOption
-                v-for="(option, index) in item.options"
-                v-bind="option.props"
-                :key="index"
-                :label="option[item.labelKey || 'label'] || option"
-                :value="option[item.valueKey || 'value'] ?? option"
-              />
-            </ElSelect>
-            <ElRadioGroup v-else-if="item.is === 'form-radio'" v-model="item.value">
-              <ElRadio
-                v-for="(option, index) in item.options"
-                v-bind="option.props"
-                :key="index"
-                :value="option[item.valueKey || 'value'] ?? option"
-              >
-                {{ option[item.labelKey || 'label'] || option }}
-              </ElRadio>
-            </ElRadioGroup>
-            <ElCheckboxGroup
-              v-else-if="item.is === 'form-checkbox'"
-              v-model="item.value"
-              v-bind="item.props"
+              {{ option[item.labelKey || 'label'] || option }}
+            </ElRadio>
+          </ElRadioGroup>
+          <ElCheckboxGroup
+            v-else-if="item.is === 'form-checkbox'"
+            v-model="item.value"
+            v-bind="item.props"
+          >
+            <ElCheckbox
+              v-for="(option, index) in item.options"
+              v-bind="option.props"
+              :key="index"
+              :value="option[item.valueKey || 'value'] ?? option"
             >
-              <ElCheckbox
-                v-for="(option, index) in item.options"
-                v-bind="option.props"
-                :key="index"
-                :value="option[item.valueKey || 'value'] ?? option"
-              >
-                {{ option[item.labelKey || 'label'] || option }}
-              </ElCheckbox>
-            </ElCheckboxGroup>
-            <ElDatePicker
-              v-else-if="item.is === 'form-date-picker'"
-              v-model="item.value"
-              type="date"
-              placeholder="请选择"
-              clearable
-              :value-format="datePickerValueFormat[item.props?.type ?? 'date']"
-              start-placeholder="请选择"
-              end-placeholder="请选择"
-              v-bind="item.props"
-            />
-            <ElTreeSelect
-              v-else-if="item.is === 'form-tree-select'"
-              v-model="item.value"
-              clearable
-              v-bind="item.props"
-              :data="item.options"
-            />
-            <ElCascader
-              v-else-if="item.is === 'form-cascader'"
-              v-model="item.value"
-              clearable
-              v-bind="item.props"
-              :validate-event="false"
-            />
-            <Component
-              v-else-if="item.is"
-              v-model="item.value"
-              v-bind="{ ...item, ...item.props }"
-              :hidden="false"
-              :is="item.is"
-            />
-          </ElFormItem>
-        </ElCol>
+              {{ option[item.labelKey || 'label'] || option }}
+            </ElCheckbox>
+          </ElCheckboxGroup>
+          <ElDatePicker
+            v-else-if="item.is === 'form-date-picker'"
+            v-model="item.value"
+            type="date"
+            placeholder="请选择"
+            clearable
+            :value-format="datePickerValueFormat[item.props?.type ?? 'date']"
+            start-placeholder="请选择"
+            end-placeholder="请选择"
+            v-bind="item.props"
+          />
+          <ElTreeSelect
+            v-else-if="item.is === 'form-tree-select'"
+            v-model="item.value"
+            clearable
+            v-bind="item.props"
+            :data="item.options"
+          />
+          <ElCascader
+            v-else-if="item.is === 'form-cascader'"
+            v-model="item.value"
+            clearable
+            v-bind="item.props"
+            :validate-event="false"
+          />
+          <Component
+            v-else-if="item.is"
+            v-model="item.value"
+            v-bind="{ ...item, ...item.props }"
+            :hidden="false"
+            :is="item.is"
+          />
+        </ElFormItem>
+        <!-- </ElCol> -->
 
-        <ElCol :span="8">
-          <ElFormItem>
-            <ElButton type="primary" :loading="loading" @click="handleQuery"> 查询 </ElButton>
-            <ElButton @click="handleReset">重置</ElButton>
-          </ElFormItem>
-        </ElCol>
-      </ElRow>
+        <!-- <ElCol :span="8" class="pro-query-form-actions"> -->
+        <ElFormItem class="pro-query-form-actions">
+          <ElButton type="primary" :loading="loading" @click="handleQuery"> 查询 </ElButton>
+          <ElButton @click="handleReset">重置</ElButton>
+          <ElButton
+            v-if="Object.keys(computedMoreFields).length > 0"
+            type="primary"
+            link
+            @click="showMore = !showMore"
+          >
+            <template v-if="showMore">
+              收起 <ElIcon> <ArrowUp /></ElIcon>
+            </template>
+            <template v-else>
+              展开 <ElIcon> <ArrowDown /></ElIcon>
+            </template>
+          </ElButton>
+        </ElFormItem>
+        <!-- </ElCol> -->
+      </ElSpace>
+      <ElSpace
+        span="18"
+        class="more-fields"
+        v-if="showMore && Object.keys(computedMoreFields).length > 0"
+      >
+        <ElFormItem v-for="(item, key) in computedMoreFields" :key="key" :label="item.label">
+          <ElInput
+            v-if="item.is === 'form-input'"
+            v-model="item.value"
+            placeholder="请填写"
+            clearable
+            v-bind="item.props"
+          />
+          <ElSelect
+            v-else-if="item.is === 'form-select'"
+            v-model="item.value"
+            placeholder="请选择"
+            clearable
+            filterable
+            v-bind="item.props"
+          >
+            <ElOption
+              v-for="(option, index) in item.options"
+              v-bind="option.props"
+              :key="index"
+              :label="option[item.labelKey || 'label'] || option"
+              :value="option[item.valueKey || 'value'] ?? option"
+            />
+          </ElSelect>
+          <ElRadioGroup v-else-if="item.is === 'form-radio'" v-model="item.value">
+            <ElRadio
+              v-for="(option, index) in item.options"
+              v-bind="option.props"
+              :key="index"
+              :value="option[item.valueKey || 'value'] ?? option"
+            >
+              {{ option[item.labelKey || 'label'] || option }}
+            </ElRadio>
+          </ElRadioGroup>
+          <ElCheckboxGroup
+            v-else-if="item.is === 'form-checkbox'"
+            v-model="item.value"
+            v-bind="item.props"
+          >
+            <ElCheckbox
+              v-for="(option, index) in item.options"
+              v-bind="option.props"
+              :key="index"
+              :value="option[item.valueKey || 'value'] ?? option"
+            >
+              {{ option[item.labelKey || 'label'] || option }}
+            </ElCheckbox>
+          </ElCheckboxGroup>
+          <ElDatePicker
+            v-else-if="item.is === 'form-date-picker'"
+            v-model="item.value"
+            type="date"
+            placeholder="请选择"
+            clearable
+            :value-format="datePickerValueFormat[item.props?.type ?? 'date']"
+            start-placeholder="请选择"
+            end-placeholder="请选择"
+            v-bind="item.props"
+          />
+          <ElTreeSelect
+            v-else-if="item.is === 'form-tree-select'"
+            v-model="item.value"
+            clearable
+            v-bind="item.props"
+            :data="item.options"
+          />
+          <ElCascader
+            v-else-if="item.is === 'form-cascader'"
+            v-model="item.value"
+            clearable
+            v-bind="item.props"
+            :validate-event="false"
+          />
+          <Component
+            v-else-if="item.is"
+            v-model="item.value"
+            v-bind="{ ...item, ...item.props }"
+            :hidden="false"
+            :is="item.is"
+          />
+        </ElFormItem>
+      </ElSpace>
     </ElForm>
   </div>
 </template>
@@ -113,10 +213,47 @@
   const props = defineProps(proQueryFormProps)
 
   const computedFields = computed(() => {
-    // todo 这里可以过滤需要隐藏的字段
-    // 但是因为是查询 query 暂不处理
-    return props.metadata
+    const { metadata, moreIndex } = props
+    const fields = { ...metadata }
+
+    if (moreIndex > 0) {
+      // 按索引分割，小于moreIndex的字段显示在默认区域
+      const keys = Object.keys(fields)
+      const result: Record<string, any> = {}
+
+      for (let i = 0; i < keys.length; i++) {
+        if (i < moreIndex) {
+          result[keys[i]] = fields[keys[i]]
+        }
+      }
+
+      return result
+    } else {
+      return fields
+    }
   })
+  const computedMoreFields = computed(() => {
+    const { metadata, moreIndex } = props
+    const fields = { ...metadata }
+
+    if (moreIndex > 0) {
+      // 按索引分割，大于等于moreIndex的字段显示在更多筛选区域
+      const keys = Object.keys(fields)
+      const result: Record<string, any> = {}
+
+      for (let i = 0; i < keys.length; i++) {
+        if (i >= moreIndex) {
+          result[keys[i]] = fields[keys[i]]
+        }
+      }
+
+      return result
+    } else {
+      return {}
+    }
+  })
+
+  const showMore = ref(false)
 
   // 查询
   const handleQuery = () => {
@@ -190,18 +327,22 @@
         @extend %w100;
       }
     }
+    .more-fields {
+      margin-top: 16px;
+    }
   }
 
   .pro-query-form-actions {
-    @extend %df;
-    @extend %fdc;
-    @extend %aic;
-    margin-left: j(16);
-    :deep {
-      .el-button + .el-button {
-        margin-left: 0;
-        margin-top: j(10);
-      }
-    }
+    margin-left: auto;
+    // @extend %df;
+    // @extend %fdc;
+    // @extend %aic;
+    // margin-left: j(16);
+    // :deep {
+    //   .el-button + .el-button {
+    //     margin-left: 0;
+    //     margin-top: j(10);
+    //   }
+    // }
   }
 </style>

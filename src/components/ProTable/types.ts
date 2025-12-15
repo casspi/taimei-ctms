@@ -32,6 +32,10 @@ export const proTableProps = {
     type: Boolean,
     default: true,
   },
+  moreIndex: {
+    type: Number,
+    default: 2,
+  },
 }
 
 export type ProTableProps = ExtractPropTypes<typeof proTableProps>

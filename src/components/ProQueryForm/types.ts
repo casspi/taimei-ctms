@@ -35,6 +35,10 @@ export const proQueryFormProps = {
     type: Boolean,
     default: false,
   },
+  moreIndex: {
+    type: Number,
+    default: 2,
+  },
 }
 
 export type ProQueryFormProps = ExtractPropTypes<typeof proQueryFormProps>

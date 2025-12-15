@@ -4,6 +4,7 @@
     :query-metadata="queryMetadata"
     ref="proTableInstance"
     :pageSize="40"
+    :more-index="2"
   >
     <template #actions>
       <ProActionButton type="primary" icon="Plus" @click="handleAddedOrUpdate()">
@@ -139,7 +140,7 @@
       inspectTypeList: {
         is: 'form-select',
         value: '',
-        label: '监查类型',
+        label: '监查类型：',
         labelKey: 'name',
         props: {
           multiple: true,
@@ -148,11 +149,51 @@
       states: {
         value: '',
         is: 'form-select',
-        label: '审批状态',
+        label: '审批状态：',
         props: {
           multiple: true,
         },
         options: PlanStatusType,
+      },
+      startTime: {
+        label: '预期开始时间：',
+        value: [],
+        is: 'form-date-picker',
+        width: '100%',
+        get: (v) => {
+          const [startTimeFirst, startTimeLast] = v
+          return { startTimeFirst, startTimeLast }
+        },
+        set: (d, f) => {
+          const { startTimeFirst, startTimeLast } = d
+          if (startTimeFirst && startTimeLast) {
+            f.value = [startTimeFirst, startTimeLast]
+          }
+        },
+        props: {
+          type: 'daterange',
+          defaultTime: new Date(2000, 1, 1, 10, 0, 0),
+        },
+      },
+      endTime: {
+        label: '预期结束时间：',
+        value: [],
+        is: 'form-date-picker',
+        width: '100%',
+        get: (v) => {
+          const [endTimeFirst, endTimeLast] = v
+          return { endTimeFirst, endTimeLast }
+        },
+        set: (d, f) => {
+          const { endTimeFirst, endTimeLast } = d
+          if (endTimeFirst && endTimeLast) {
+            f.value = [endTimeFirst, endTimeLast]
+          }
+        },
+        props: {
+          type: 'daterange',
+          defaultTime: new Date(2000, 1, 1, 10, 0, 0),
+        },
       },
     },
     async ([currentPage, pageSize], query) => {

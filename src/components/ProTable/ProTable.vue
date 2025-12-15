@@ -6,6 +6,7 @@
         :metadata="queryMetadata"
         :loading="status.loading"
         @query="handleQuery"
+        :more-index="moreIndex"
       />
       <div class="pro-table-actions">
         <!-- <ElButton

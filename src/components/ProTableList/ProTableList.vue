@@ -84,6 +84,7 @@
       .el-table {
         width: 100%;
         --el-table-bg-color: transparent;
+        font-size: 12px;
       }
       .el-table__header {
         --el-table-header-bg-color: #f2f3f5;

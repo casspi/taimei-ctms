@@ -10,6 +10,7 @@
         :query-metadata="queryMetadata"
         ref="proTableInstance"
         :hasRefresh="false"
+        height="auto"
       >
         <ElTableColumn label="项目编号" prop="projectCode" width="130" fixed sortable>
         </ElTableColumn>

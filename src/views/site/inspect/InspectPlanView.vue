@@ -127,7 +127,7 @@
   import { reqDictionaryInspectType, reqInspectList } from '@/api'
   import { useProDialogForm, useProTable } from '@/components'
   import DeleteButton from '@/components/DeleteButton.vue'
-  import { formatToFixedOneString, getProvinceAndCityFields } from '@/utils'
+  import { formatToFixedOneString, getProvinceAndCityFields, PlanStatusType } from '@/utils'
   import { PlanStatusTypeValueMap } from '@/utils/constants'
 
   import DelayInfo from '../components/DelayInfo.vue'
@@ -149,6 +149,10 @@
         value: '',
         is: 'form-select',
         label: '审批状态',
+        props: {
+          multiple: true,
+        },
+        options: PlanStatusType,
       },
     },
     async ([currentPage, pageSize], query) => {
@@ -159,7 +163,8 @@
 
   const { data: mapOptions } = useAsyncTask(
     async () => {
-      const [inspectTypes] = await Promise.all([reqDictionaryInspectType])
+      const [inspectTypes] = await Promise.all([reqDictionaryInspectType()])
+      console.log('queryMetadata.inspectTypeList', queryMetadata.inspectTypeList, inspectTypes)
       queryMetadata.inspectTypeList.options = inspectTypes
       return { inspectTypes }
     },

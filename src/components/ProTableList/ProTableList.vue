@@ -13,6 +13,7 @@
           :data="data"
           height="100%"
           @selection-change="handleSelectionChange"
+          v-bind="$attrs"
         >
           <template #empty>
             <ElEmpty description="暂无数据" :image-size="68" />

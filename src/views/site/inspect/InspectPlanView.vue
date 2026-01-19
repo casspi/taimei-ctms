@@ -128,7 +128,7 @@
   import { reqDictionaryInspectType, reqInspectList } from '@/api'
   import { useProDialogForm, useProTable } from '@/components'
   import DeleteButton from '@/components/DeleteButton.vue'
-  import { formatToFixedOneString, getProvinceAndCityFields, PlanStatusType } from '@/utils'
+  import { formatEndTime, formatStartTime, formatToFixedOneString, PlanStatusType } from '@/utils'
   import { PlanStatusTypeValueMap } from '@/utils/constants'
 
   import DelayInfo from '../components/DelayInfo.vue'
@@ -162,9 +162,13 @@
         width: '100%',
         get: (v) => {
           const [startTimeFirst, startTimeLast] = v
-          return { startTimeFirst, startTimeLast }
+          console.log('startTimeFirst', startTimeFirst, 'startTimeLast', startTimeLast)
+          return {
+            startTimeFirst: formatStartTime(startTimeFirst),
+            startTimeLast: formatEndTime(startTimeLast),
+          }
         },
-        set: (d, f) => {
+        set: (d: any, f: any) => {
           const { startTimeFirst, startTimeLast } = d
           if (startTimeFirst && startTimeLast) {
             f.value = [startTimeFirst, startTimeLast]
@@ -182,9 +186,12 @@
         width: '100%',
         get: (v) => {
           const [endTimeFirst, endTimeLast] = v
-          return { endTimeFirst, endTimeLast }
+          return {
+            endTimeFirst: formatStartTime(endTimeFirst),
+            endTimeLast: formatEndTime(endTimeLast),
+          }
         },
-        set: (d, f) => {
+        set: (d: any, f: any) => {
           const { endTimeFirst, endTimeLast } = d
           if (endTimeFirst && endTimeLast) {
             f.value = [endTimeFirst, endTimeLast]
@@ -197,6 +204,7 @@
       },
     },
     async ([currentPage, pageSize], query) => {
+      console.log('query', query)
       const { pagination } = await reqInspectList({ currentPage, pageSize, ...query })
       return [pagination.rows, pagination.count]
     },
@@ -223,69 +231,6 @@
         label: '项目名称',
         value: '',
         is: 'form-input',
-        rules: [{ required: true }],
-      },
-      projectNo: {
-        label: '项目编号',
-        value: '',
-        is: 'form-input',
-        rules: [{ required: true }],
-      },
-      projectType: {
-        label: '项目类型',
-        value: '',
-        is: 'form-select',
-        rules: [{ required: true }],
-      },
-      projectStatus: {
-        label: '项目状态',
-        value: '',
-        is: 'form-select',
-        rules: [{ required: true }],
-      },
-      actualTime: {
-        label: '项目时间',
-        value: [],
-        is: 'form-date-picker',
-        width: '100%',
-        get: (v) => {
-          const [actualStartDt, actualEndDt] = v
-          return { actualStartDt, actualEndDt }
-        },
-        set: (d, f) => {
-          const { actualStartDt, actualEndDt } = d
-          if (actualStartDt && actualEndDt) {
-            f.value = [actualStartDt, actualEndDt]
-          }
-        },
-        props: {
-          type: 'datetimerange',
-        },
-        rules: [{ required: true }],
-      },
-      projectOwnerName: {
-        label: '项目负责人',
-        value: '',
-        is: 'form-input',
-        rules: [{ required: true }],
-      },
-      contactPhone: {
-        label: '联系方式',
-        value: '',
-        is: 'form-input',
-        rules: [{ required: true }],
-      },
-      provinceAndCity: getProvinceAndCityFields(),
-      projectDescription: {
-        label: '项目背景',
-        value: '',
-        is: 'form-tinymce',
-        rules: [{ required: true }],
-      },
-      context: {
-        label: '项目内容',
-        value: '',
-        is: 'form-tinymce',
         rules: [{ required: true }],
       },
     }),

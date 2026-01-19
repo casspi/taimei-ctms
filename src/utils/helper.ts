@@ -45,3 +45,21 @@ export function formatToFixedOneString(num: number | string | null | undefined):
   // 保留一位小数并返回字符串类型
   return parsedNum.toFixed(1)
 }
+
+/**
+ * 格式化开始时间
+ * @param time 时间字符串
+ * @returns 时间戳
+ */
+export function formatStartTime(time: string): number {
+  return new Date(time + ' 00:00:00').getTime()
+}
+
+/**
+ * 格式化结束时间
+ * @param time 时间字符串
+ * @returns 时间戳
+ */
+export function formatEndTime(time: string): number {
+  return new Date(time + ' 23:59:59').getTime()
+}

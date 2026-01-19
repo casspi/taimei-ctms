@@ -17,6 +17,7 @@
             placeholder="请选择"
             clearable
             filterable
+            style="width: 200px"
             v-bind="item.props"
           >
             <ElOption
@@ -111,7 +112,12 @@
         class="more-fields"
         v-if="showMore && Object.keys(computedMoreFields).length > 0"
       >
-        <ElFormItem v-for="(item, key) in computedMoreFields" :key="key" :label="item.label">
+        <ElFormItem
+          v-for="(item, key) in computedMoreFields"
+          :key="key"
+          :label="item.label"
+          :label-position="item.labelPosition || 'right'"
+        >
           <ElInput
             v-if="item.is === 'form-input'"
             v-model="item.value"
@@ -125,6 +131,7 @@
             placeholder="请选择"
             clearable
             filterable
+            style="width: 200px"
             v-bind="item.props"
           >
             <ElOption
@@ -258,7 +265,8 @@
   // 查询
   const handleQuery = () => {
     const value = filterEmptyValue(banana.extract(computedFields.value), true)
-    emits('query', value)
+    const moreValue = filterEmptyValue(banana.extract(computedMoreFields.value), true)
+    emits('query', { ...value, ...moreValue })
   }
 
   // YYYY-MM-DD HH:mm:ss
@@ -296,11 +304,15 @@
     @extend %df;
     @extend %pr;
     background-color: #fff;
-    max-width: 1000px;
+    // max-width: 1000px;
+    flex: 1;
     min-width: 800px;
     :deep {
       .el-date-editor {
         --el-date-editor-width: 100%;
+      }
+      .el-space {
+        align-items: flex-start !important;
       }
       .el-form {
         @extend %db;

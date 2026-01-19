@@ -56,6 +56,7 @@
   const query = ref(filterEmptyValue(banana.extract(props.queryMetadata), true))
 
   const handleQuery = (val: Record<string, any>) => {
+    console.log('query=>', val)
     query.value = val
     reqTableList(1)
   }

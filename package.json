@@ -17,6 +17,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@camomile.js/components": "^0.0.20",
     "@daysnap/banana": "^0.0.15",
     "@daysnap/utils": "^0.1.22",
     "@daysnap/vue-use": "^0.0.12",

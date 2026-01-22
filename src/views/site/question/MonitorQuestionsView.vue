@@ -14,7 +14,9 @@
       </ProActionButton>
       <ProActionButton plain @click="handleAddedOrUpdate()"> 下载Excel </ProActionButton>
     </template>
-
+    <template #top>
+      <ElCheckbox class="view-deleted" v-model="viewDeleted">显示被删除的问题</ElCheckbox>
+    </template>
     <ElTableColumn type="expand">
       <template #default="scope">
         <span>问题描述：{{ scope.row.description }}</span>
@@ -30,14 +32,14 @@
     <ElTableColumn label="问题分类" min-width="130" prop="reportQuestionCategoryName" />
     <ElTableColumn label="监查项" min-width="200" prop="reportItemName" />
     <ElTableColumn label="监查类型" min-width="130" prop="reportTypeName" />
-    <ElTableColumn label="问题状态" min-width="130" prop="questionProcess" />
+    <QuestionStatusColumn label="问题状态" min-width="130" prop="questionProcess" />
     <ElTableColumn label="问题来源" min-width="130" prop="questionSourceName" />
-    <ElTableColumn label="创建者" min-width="130">
+    <ElTableColumn label="创建者" min-width="150">
       <template #default="scope">
-        <span>
-          {{ scope.row.createName }}
-        </span>
-        <span>{{ scope.row.createTime }}</span>
+        <ul>
+          <li>{{ scope.row.createName }}</li>
+          <li>{{ formatDate(scope.row.createTime, 'yyyy-MM-dd hh:mm:ss') }}</li>
+        </ul>
       </template>
     </ElTableColumn>
 
@@ -191,7 +193,12 @@
     },
     async ([currentPage, pageSize], query) => {
       console.log('query', query)
-      const { page: pagination } = await reqQuestionList({ currentPage, pageSize, ...query })
+      const { page: pagination } = await reqQuestionList({
+        currentPage,
+        pageSize,
+        viewDeleted: viewDeleted.value,
+        ...query,
+      })
       return [pagination.rows, pagination.count]
     },
   )
@@ -214,24 +221,21 @@
   const [proDialogFormInstance, handleAddedOrUpdate] = useProDialogForm<Project>(
     () => ({
       projectName: {
-        label: '项目名称',
+        label: '问题来源',
         value: '',
         is: 'form-input',
         rules: [{ required: true }],
       },
     }),
-    async (metadata, instance, item) => {
-      metadata.projectStatus.options = mapOptions.value.status
-      metadata.projectType.options = mapOptions.value.types
-
-      // await instance.value.show({
-      //   title: item ? '编辑' : '新增',
-      //   metadata,
-      //   request: (params) =>
-      //     item
-      //       ? doProjectUpdate({ projectId: item.projectId, ...params })
-      //       : doProjectCreate(params),
-      // })
+    async (schema, instance, item) => {
+      await instance.value.show({
+        title: '新增问题',
+        schema,
+        request: (params) => {
+          console.log('params', params)
+          return Promise.resolve('1')
+        },
+      })
       proTableInstance.value.reload()
       ElMessage.success('操作成功')
     },
@@ -245,3 +249,8 @@
     ElMessage.success('操作成功')
   }
 </script>
+<style lang="scss" scoped>
+  .view-deleted {
+    margin-left: auto;
+  }
+</style>

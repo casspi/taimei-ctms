@@ -32,7 +32,7 @@ export default [
         path: '/site/question',
         component: () => LayoutRouterView,
         redirect: '/site/question/monitor',
-        meta: { title: '问题跟踪', icon: 'Memo' },
+        meta: { title: '问题跟踪', icon: 'QuestionFilled' },
         children: [
           {
             path: '/site/question/monitor',

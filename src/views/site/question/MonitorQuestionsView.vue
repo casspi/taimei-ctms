@@ -10,10 +10,8 @@
     stripe
   >
     <template #actions>
-      <ProActionButton type="primary" icon="Plus" @click="handleAddedOrUpdate()">
-        新增
-      </ProActionButton>
-      <ProActionButton plain @click="handleAddedOrUpdate()"> 下载Excel </ProActionButton>
+      <ProActionButton type="primary" icon="Plus" @click="handleAdded()"> 新增 </ProActionButton>
+      <ProActionButton plain @click="handleDownloadExcel()"> 下载Excel </ProActionButton>
     </template>
     <template #top>
       <ElCheckbox class="view-deleted" v-model="viewDeleted">显示被删除的问题</ElCheckbox>
@@ -46,20 +44,20 @@
 
     <ProTableActionsColumn>
       <template #default="scope">
-        <ProTableActionButton type="primary" @click="handleAddedOrUpdate(scope.row)">
+        <ProTableActionButton type="primary" @click="handleUpdate(scope.row)">
           编辑
         </ProTableActionButton>
-        <ProTableActionButton type="primary" @click="handleAddedOrUpdate(scope.row)">
-          查看
-        </ProTableActionButton>
+        <ProTableActionButton type="primary"> 查看 </ProTableActionButton>
       </template>
     </ProTableActionsColumn>
   </ProTable>
 
-  <ProDrawer ref="proDrawerInstance" />
+  <ProDrawer ref="proDrawerFormRef" />
+  <ProDialogForm ref="proDialogFormRef" />
 </template>
 
 <script setup lang="ts">
+  import { useProDialogForm } from '@camomile.js/components'
   import { formatDate } from '@daysnap/utils'
   import { useAsyncTask } from '@daysnap/vue-use'
 
@@ -212,7 +210,7 @@
   )
 
   // 编辑 or 新增
-  const [proDrawerInstance, handleAddedOrUpdate] = useProDrawer(
+  const [proDrawerFormRef, handleAdded] = useProDrawer(
     () => ({
       projectName: {
         label: '问题来源',
@@ -234,7 +232,30 @@
       ElMessage.success('操作成功')
     },
   )
-
+  // 编辑
+  const [proDialogFormRef, handleUpdate] = useProDialogForm(
+    () => ({
+      projectName: {
+        label: '问题来源',
+        value: '',
+        is: 'ElSelect',
+        rules: [{ required: true }],
+      },
+    }),
+    async (schema, instance, item) => {
+      await instance.value.show({
+        title: '新增问题',
+        schema,
+        request: (params) => {
+          console.log('params', params)
+          return Promise.resolve('1')
+        },
+      })
+      proTableInstance.value.reload()
+      ElMessage.success('操作成功')
+    },
+  )
+  const handleDownloadExcel = async () => {}
   // 删除
   const handleDelete = async (item: any) => {
     const { projectId } = item

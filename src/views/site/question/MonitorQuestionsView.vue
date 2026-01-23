@@ -1,4 +1,5 @@
 <template>
+  <div class="totals"></div>
   <ProTable
     :request="handleRequest"
     :query-metadata="queryMetadata"
@@ -55,26 +56,18 @@
     </ProTableActionsColumn>
   </ProTable>
 
-  <ProDialogForm ref="proDialogFormInstance" />
+  <ProDrawer ref="proDrawerInstance" />
 </template>
 
 <script setup lang="ts">
+  import { formatDate } from '@daysnap/utils'
   import { useAsyncTask } from '@daysnap/vue-use'
 
   import { reqDictionaryInspectType, reqQuestionList } from '@/api'
-  import { useProDialogForm, useProTable } from '@/components'
-  import DeleteButton from '@/components/DeleteButton.vue'
-  import {
-    formatEndTime,
-    formatStartTime,
-    formatToFixedOneString,
-    hour2dayRemainder,
-    PlanStatusType,
-  } from '@/utils'
-  import { PlanStatusTypeValueMap } from '@/utils/constants'
+  import { useProDrawer, useProTable } from '@/components'
+  import { formatEndTime, formatStartTime, hour2dayRemainder, PlanStatusType } from '@/utils'
 
-  import DelayInfo from '../components/DelayInfo.vue'
-  import PlanCell from '../components/PlanCell.vue'
+  import QuestionStatusColumn from './compontents/QuestionStatusColumn.vue'
 
   // 列表
   const [queryMetadata, proTableInstance, handleRequest] = useProTable(
@@ -203,6 +196,7 @@
     },
   )
 
+  const viewDeleted = ref(false)
   const { data: mapOptions } = useAsyncTask(
     async () => {
       const [inspectTypes] = await Promise.all([reqDictionaryInspectType()])
@@ -218,12 +212,12 @@
   )
 
   // 编辑 or 新增
-  const [proDialogFormInstance, handleAddedOrUpdate] = useProDialogForm<Project>(
+  const [proDrawerInstance, handleAddedOrUpdate] = useProDrawer(
     () => ({
       projectName: {
         label: '问题来源',
         value: '',
-        is: 'form-input',
+        is: 'ElSelect',
         rules: [{ required: true }],
       },
     }),
@@ -250,6 +244,36 @@
   }
 </script>
 <style lang="scss" scoped>
+  .totals {
+    text-align: right;
+    margin-top: -56px;
+    line-height: 40px;
+    margin-bottom: 15px;
+    width: 40%;
+    float: right;
+    margin-right: 20px;
+  }
+
+  .totals span {
+    color: #aeaeae;
+  }
+
+  .totals .bold {
+    font-size: 16px;
+    color: #000;
+    padding-left: 10px;
+    font-weight: 400;
+    padding-right: 10px;
+  }
+
+  .totals a {
+    color: #000;
+  }
+
+  .totals .done {
+    color: #108ee9;
+  }
+
   .view-deleted {
     margin-left: auto;
   }

@@ -1,7 +1,7 @@
 <template>
-  <ElDialog
+  <ElDrawer
     v-model="visible"
-    class="pro-dialog-form"
+    class="pro-drawer"
     :class="[id]"
     ref="containerRef"
     :title="computedProps.title"
@@ -18,8 +18,8 @@
     >
       <slot></slot>
     </ProSchemaForm>
-
     <template v-if="computedProps.showCancelButton || computedProps.showConfirmButton" #footer>
+      <ElDivider />
       <span class="dialog-footer">
         <ElButton v-if="computedProps.showCancelButton" @click="hide('cancel')">
           {{ computedProps.cancelButtonText }}
@@ -34,7 +34,7 @@
         </ElButton>
       </span>
     </template>
-  </ElDialog>
+  </ElDrawer>
 </template>
 
 <script setup lang="ts">
@@ -43,22 +43,20 @@
   import { computed, nextTick, type Ref, ref, watch } from 'vue'
 
   import { ProSchemaForm, type ProSchemaFormInstance, proSchemaFormProps } from '../ProSchemaForm'
-  import { type ProDialogFormProps, proDialogFormProps } from './types'
+  import { type ProDrawerProps, proDrawerProps } from './types'
 
   defineEmits(['change-field'])
 
-  const dynamicProps = ref<Partial<ProDialogFormProps>>()
-  const props = defineProps(proDialogFormProps)
+  const dynamicProps = ref<Partial<ProDrawerProps>>()
+  const props = defineProps(proDrawerProps)
 
-  const computedProps = computed<ProDialogFormProps>(() =>
-    Object.assign({}, props, dynamicProps.value),
-  )
+  const computedProps = computed<ProDrawerProps>(() => Object.assign({}, props, dynamicProps.value))
 
   const schemaFormProps = computed(() => {
     return pick(computedProps.value, Object.keys(proSchemaFormProps) as any)
   })
 
-  const { show, hide, confirm, visible } = useVisible<Partial<ProDialogFormProps>, any>({
+  const { show, hide, confirm, visible } = useVisible<Partial<ProDrawerProps>, any>({
     showCallback: (options) => {
       dynamicProps.value = options
     },

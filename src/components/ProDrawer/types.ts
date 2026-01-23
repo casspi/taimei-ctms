@@ -2,11 +2,11 @@ import type { ExtractPropTypes, PropType } from 'vue'
 
 import { type ProSchemaFormMetadata, proSchemaFormProps } from '../ProSchemaForm'
 
-export interface ProDialogFormRequest {
+export interface ProDrawerRequest {
   (data: any, schema: ProSchemaFormMetadata): Promise<any>
 }
 
-export const proDialogFormProps = {
+export const proDrawerProps = {
   ...proSchemaFormProps,
   title: String,
   style: {
@@ -18,11 +18,11 @@ export const proDialogFormProps = {
     default: () => ({}),
   },
   request: {
-    type: Function as PropType<ProDialogFormRequest>,
+    type: Function as PropType<ProDrawerRequest>,
   },
   labelPosition: {
     type: String as PropType<'left' | 'right' | 'top'>,
-    default: 'top',
+    default: 'right',
   },
   labelWidth: {
     type: String,
@@ -46,4 +46,4 @@ export const proDialogFormProps = {
   },
 }
 
-export type ProDialogFormProps = ExtractPropTypes<typeof proDialogFormProps>
+export type ProDrawerProps = ExtractPropTypes<typeof proDrawerProps>

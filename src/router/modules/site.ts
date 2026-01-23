@@ -1,6 +1,6 @@
-import type { RouteRecordRaw } from 'vue-router'
+import { type RouteRecordRaw, RouterView } from 'vue-router'
 
-import { LayoutRouterView, LayoutView } from '@/layout'
+import { LayoutView } from '@/layout'
 
 export default [
   {
@@ -12,7 +12,7 @@ export default [
     children: [
       {
         path: '/site/inspect',
-        component: () => LayoutRouterView,
+        component: RouterView,
         redirect: '/site/inspect/plan',
         meta: { title: '报告撰写', icon: 'Memo' },
         children: [
@@ -30,7 +30,7 @@ export default [
       },
       {
         path: '/site/question',
-        component: () => LayoutRouterView,
+        component: RouterView,
         redirect: '/site/question/monitor',
         meta: { title: '问题跟踪', icon: 'QuestionFilled' },
         children: [

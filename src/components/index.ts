@@ -1,5 +1,6 @@
 export * from './ProActionButton'
 export * from './ProDialogForm'
+export * from './ProDrawer'
 export * from './ProFileUpload'
 export * from './ProImageUpload'
 export * from './ProQueryForm'

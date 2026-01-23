@@ -2,27 +2,27 @@ import banana from '@daysnap/banana'
 import { type Ref, ref } from 'vue'
 
 import { type ProSchemaFormMetadata } from '../ProSchemaForm'
-import type { ProDialogFormInstance } from '.'
+import type { ProDrawerInstance } from '.'
 
-export interface UseProDialogFormOptions<T = any> {
-  instanceRef?: Ref<ProDialogFormInstance>
+export interface UseProDrawerOptions<T = any> {
+  instanceRef?: Ref<ProDrawerInstance>
   onGenerate?: (schema: ProSchemaFormMetadata, event?: T, ...args: any[]) => void
   onSuccess?: (schema: ProSchemaFormMetadata, event?: T, ...args: any[]) => void
 }
 
-export function useProDialogForm<T = any>(
+export function useProDrawer<T = any>(
   generator: () => ProSchemaFormMetadata | Promise<ProSchemaFormMetadata>,
   task: (
     schema: ProSchemaFormMetadata,
-    instanceRef: Ref<ProDialogFormInstance>,
+    instanceRef: Ref<ProDrawerInstance>,
     event?: T,
     ...args: any[]
   ) => Promise<any>,
-  options: UseProDialogFormOptions<T> = {},
+  options: UseProDrawerOptions<T> = {},
 ) {
   const { onGenerate, onSuccess, instanceRef } = options
 
-  const proDialogFormRef = instanceRef ?? (ref() as Ref<ProDialogFormInstance>)
+  const proDrawerFormRef = instanceRef ?? (ref() as Ref<ProDrawerInstance>)
 
   const schema = ref() as Ref<ProSchemaFormMetadata>
   const trigger = async (event?: T, ...args: any[]) => {
@@ -33,26 +33,26 @@ export function useProDialogForm<T = any>(
 
     onGenerate?.(schema.value, event, ...args)
 
-    await task(schema.value, proDialogFormRef, event, ...args)
+    await task(schema.value, proDrawerFormRef, event, ...args)
 
     onSuccess?.(schema.value, event, ...args)
   }
 
-  return [proDialogFormRef, trigger, schema] as const
+  return [proDrawerFormRef, trigger, schema] as const
 }
 
-export function createProDialogForm<T = any>(
+export function createProDrawer<T = any>(
   generator: () => ProSchemaFormMetadata,
   task: (
     schema: ProSchemaFormMetadata,
-    instanceRef: Ref<ProDialogFormInstance>,
+    instanceRef: Ref<ProDrawerInstance>,
     event?: T,
     ...args: any[]
   ) => Promise<any>,
-  opt?: UseProDialogFormOptions<T>,
+  opt?: UseProDrawerOptions<T>,
 ) {
-  return function (options?: UseProDialogFormOptions<T>) {
-    return useProDialogForm<T>(generator, task, {
+  return function (options?: UseProDrawerOptions<T>) {
+    return useProDrawer<T>(generator, task, {
       ...opt,
       ...options,
       onGenerate: (...args) => {

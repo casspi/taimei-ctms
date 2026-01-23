@@ -1,6 +1,6 @@
-import type { RouteRecordRaw } from 'vue-router'
+import { type RouteRecordRaw, RouterView } from 'vue-router'
 
-import { LayoutRouterView, LayoutView } from '@/layout'
+import { LayoutView } from '@/layout'
 
 export default [
   {
@@ -12,7 +12,7 @@ export default [
     children: [
       {
         path: '/project/process',
-        component: () => LayoutRouterView,
+        component: RouterView,
         meta: { title: '项目进展', icon: 'Memo' },
         children: [
           {

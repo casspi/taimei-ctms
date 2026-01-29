@@ -1,7 +1,10 @@
 :root {
   --el-border-radius-base: 4px;
+  --el-font-size-base: 12px;
 }
-
+.el-select__wrapper {
+  font-size: 12px;
+}
 .el-table__expanded-cell {
   padding: 10px 32px !important;
   .el-row {
@@ -40,8 +43,9 @@
 
 // 恢复 el-link 和 el-tag 组件的默认颜色
 
-.el-link, .el-tag {
-  --el-color-primary:#409eff;
+.el-link,
+.el-tag {
+  --el-color-primary: #409eff;
 
   --el-color-primary-light-1: #53a8ff;
   --el-color-primary-light-2: #66b1ff;
@@ -53,4 +57,3 @@
   --el-color-primary-light-8: #d9ecff;
   --el-color-primary-light-9: #ecf5ff;
 }
-

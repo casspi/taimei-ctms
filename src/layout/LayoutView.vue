@@ -158,6 +158,7 @@
   .layout-content {
     @extend %bsb;
     padding: 16px;
+    position: relative;
     padding-top: calc($navbar-height + 50px + 16px);
     height: 100vh;
   }

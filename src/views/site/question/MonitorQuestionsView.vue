@@ -1,5 +1,5 @@
 <template>
-  <div class="totals"></div>
+  <div class="totals">2222</div>
   <ProTable
     :request="handleRequest"
     :query-metadata="queryMetadata"
@@ -212,11 +212,75 @@
   // 编辑 or 新增
   const [proDrawerFormRef, handleAdded] = useProDrawer(
     () => ({
-      projectName: {
+      questionSourceId: {
         label: '问题来源',
         value: '',
         is: 'ElSelect',
         rules: [{ required: true }],
+      },
+      reportQuestionCategoryId: {
+        label: '监查类型',
+        value: '',
+        is: 'ElSelect',
+      },
+      r1: {
+        label: '监查项',
+        value: '',
+        is: 'ElSelect',
+      },
+      r2: {
+        label: '问题分类',
+        value: '',
+        is: 'ElSelect',
+        rules: [{ required: true }],
+      },
+      r3: {
+        label: '问题描述',
+        value: '',
+        is: 'ElInput',
+        rules: [{ required: true }],
+        props: {
+          type: 'textarea',
+          autosize: { minRows: 2 },
+        },
+      },
+      r4: {
+        label: '受试者',
+        value: '',
+        is: 'ElSelect',
+        rules: [{ required: true }],
+      },
+      r5: {
+        label: '协同责任人',
+        value: '',
+        is: 'ElInput',
+        rules: [{ required: true }],
+      },
+      r6: {
+        label: '发现时间',
+        value: '',
+        is: 'ElDatePicker',
+        rules: [{ required: true }],
+      },
+      r7: {
+        label: '目标解决日期',
+        value: '',
+        is: 'ElDatePicker',
+        props: {
+          type: 'datetime',
+          disabled: true,
+        },
+      },
+      r8: {
+        label: '计划解决日期',
+        value: '',
+        is: 'ElDatePicker',
+        rules: [{ required: true }],
+      },
+      r9: {
+        label: '实际解决日期',
+        value: '',
+        is: 'ElDatePicker',
       },
     }),
     async (schema, instance, item) => {
@@ -266,12 +330,12 @@
 </script>
 <style lang="scss" scoped>
   .totals {
-    text-align: right;
-    margin-top: -56px;
+    position: absolute;
+    top: -56px;
+    right: 0;
     line-height: 40px;
     margin-bottom: 15px;
     width: 40%;
-    float: right;
     margin-right: 20px;
   }
 

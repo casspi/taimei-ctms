@@ -108,7 +108,13 @@
   import { reqInspectReportList } from '@/api'
   import { useProDialogForm, useProTable } from '@/components'
   import { PD } from '@/stores'
-  import { formatToFixedOneString, getKeywordFields, getProvinceAndCityFields } from '@/utils'
+  import {
+    formatEndTime,
+    formatStartTime,
+    formatToFixedOneString,
+    getKeywordFields,
+    getProvinceAndCityFields,
+  } from '@/utils'
 
   import PlanCell from '../components/PlanCell.vue'
 
@@ -123,11 +129,52 @@
         value: '',
         label: '项目名称',
       },
-      provinceAndCity: getProvinceAndCityFields({ query: true }),
-      projectStatus: {
-        value: '',
-        is: 'form-select',
-        label: '项目状态',
+      startTime: {
+        label: '预期开始时间：',
+        value: [],
+        is: 'form-date-picker',
+        width: '100%',
+        get: (v) => {
+          const [startTimeFirst, startTimeLast] = v
+          console.log('startTimeFirst', startTimeFirst, 'startTimeLast', startTimeLast)
+          return {
+            startTimeFirst: formatStartTime(startTimeFirst),
+            startTimeLast: formatEndTime(startTimeLast),
+          }
+        },
+        set: (d: any, f: any) => {
+          const { startTimeFirst, startTimeLast } = d
+          if (startTimeFirst && startTimeLast) {
+            f.value = [startTimeFirst, startTimeLast]
+          }
+        },
+        props: {
+          type: 'daterange',
+          defaultTime: new Date(2000, 1, 1, 10, 0, 0),
+        },
+      },
+      endTime: {
+        label: '预期结束时间：',
+        value: [],
+        is: 'form-date-picker',
+        width: '100%',
+        get: (v) => {
+          const [endTimeFirst, endTimeLast] = v
+          return {
+            endTimeFirst: formatStartTime(endTimeFirst),
+            endTimeLast: formatEndTime(endTimeLast),
+          }
+        },
+        set: (d: any, f: any) => {
+          const { endTimeFirst, endTimeLast } = d
+          if (endTimeFirst && endTimeLast) {
+            f.value = [endTimeFirst, endTimeLast]
+          }
+        },
+        props: {
+          type: 'daterange',
+          defaultTime: new Date(2000, 1, 1, 10, 0, 0),
+        },
       },
     },
     async ([currentPage, pageSize], query) => {
@@ -148,7 +195,7 @@
   )
 
   // 编辑 or 新增
-  const [proDialogFormInstance, handleAddedOrUpdate] = useProDialogForm<Project>(
+  const [proDialogFormInstance, handleAddedOrUpdate] = useProDialogForm<any>(
     () => ({
       projectName: {
         label: '项目名称',
